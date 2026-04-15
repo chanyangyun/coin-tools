@@ -101,6 +101,7 @@
   .btn:active { transform: translateY(0); }
   .btn-green { background: linear-gradient(135deg, var(--accent2), #00b894); }
   .error-msg { color: var(--red); font-size: 12px; margin-top: 8px; display: none; }
+
   /* 목표 매도가 결과 */
   .target-result {
     background: rgba(0,255,136,0.07);
@@ -112,7 +113,10 @@
   .target-result.visible { display: block; }
   .t-label { font-size: 11px; color: var(--accent2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
   .target-price { font-family: 'Black Han Sans', sans-serif; font-size: 36px; color: var(--accent2); letter-spacing: -1px; }
-  .target-sub { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .target-sub { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.8; }
+  .target-sub span { display: block; }
+  .target-sub .highlight { color: var(--accent2); font-weight: 700; font-size: 14px; }
+
   /* 수익 계산 결과 */
   .result-card {
     background: var(--card); border: 1px solid var(--border);
@@ -243,6 +247,13 @@
         <span class="unit">%</span>
       </div>
     </div>
+    <div class="input-group">
+      <label>투자 원금 <span style="color:var(--muted);font-size:11px">(선택 · 입력 시 실제 이익금 계산)</span></label>
+      <div class="input-row">
+        <input type="number" id="targetAmount" placeholder="0" inputmode="decimal">
+        <span class="unit">원</span>
+      </div>
+    </div>
     <div class="fee-row">
       <span class="fee-badge">UPBIT</span>
       <span class="fee-text">수수료 자동 반영</span>
@@ -263,6 +274,9 @@
 <script>
   function fmt(n) {
     return n.toLocaleString('ko-KR', { maximumFractionDigits: 4 });
+  }
+  function fmtInt(n) {
+    return Math.round(n).toLocaleString('ko-KR');
   }
 
   function calculate() {
@@ -303,9 +317,9 @@
       document.getElementById('pnlItem').style.display = 'block';
       document.getElementById('feeAmtItem').style.display = 'block';
       const pnlEl = document.getElementById('pnlVal');
-      pnlEl.textContent = (pnl >= 0 ? '+' : '') + fmt(Math.round(pnl)) + '원';
+      pnlEl.textContent = (pnl >= 0 ? '+' : '') + fmtInt(pnl) + '원';
       pnlEl.className = 'd-val ' + (pnl >= 0 ? 'pos' : 'neg');
-      document.getElementById('feeAmt').textContent = '약 ' + fmt(Math.round(totalFee)) + '원';
+      document.getElementById('feeAmt').textContent = '약 ' + fmtInt(totalFee) + '원';
     } else {
       document.getElementById('pnlItem').style.display = 'none';
       document.getElementById('feeAmtItem').style.display = 'none';
@@ -324,6 +338,7 @@
   function calcTarget() {
     const buy = parseFloat(document.getElementById('targetBuy').value);
     const pct = parseFloat(document.getElementById('targetPercent').value);
+    const amount = parseFloat(document.getElementById('targetAmount').value);
     const errEl = document.getElementById('targetErrorMsg');
 
     if (!buy || isNaN(pct) || buy <= 0) {
@@ -331,7 +346,6 @@
     }
     errEl.style.display = 'none';
 
-    // 역산 공식: sell = (pct/100 + 1) * buy*(1+FEE) / (1-FEE)
     const FEE = 0.0005;
     const realBuy = buy * (1 + FEE);
     const targetSell = (pct / 100 + 1) * realBuy / (1 - FEE);
@@ -339,9 +353,22 @@
     const diffPct = (targetSell - buy) / buy * 100;
 
     document.getElementById('targetPrice').textContent = fmt(Math.ceil(targetSell)) + '원';
-    document.getElementById('targetSub').textContent =
-      '매수가 대비 +' + fmt(Math.ceil(diffAmt)) + '원\n' +
-      '호가 상승분 +' + diffPct.toFixed(2) + '% · 수수료 포함 순수익 ' + pct + '%';
+
+    let subHTML = '';
+    subHTML += '<span>매수가 대비 +' + fmt(diffAmt.toFixed(2)) + '원 (호가 +' + diffPct.toFixed(2) + '%)</span>';
+    subHTML += '<span>수수료 포함 순수익률 <b style="color:var(--accent2)">' + pct + '%</b></span>';
+
+    if (amount && amount > 0) {
+      const coins = amount / realBuy;
+      const proceeds = coins * targetSell * (1 - FEE);
+      const profit = proceeds - amount;
+      const totalFee = amount * FEE + coins * targetSell * FEE;
+      subHTML += '<span style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,255,136,0.2)">💰 실제 이익금 <span class="highlight">+' + fmtInt(profit) + '원</span></span>';
+      subHTML += '<span>최종 수령액 ' + fmtInt(amount + profit) + '원</span>';
+      subHTML += '<span>지불 수수료 약 ' + fmtInt(totalFee) + '원</span>';
+    }
+
+    document.getElementById('targetSub').innerHTML = subHTML;
     document.getElementById('targetResult').classList.add('visible');
   }
 </script>

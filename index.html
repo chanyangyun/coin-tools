@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코인 수익 계산기</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --card: #111827;
+    --card2: #1a2235;
+    --border: #1f2d45;
+    --accent: #00e5ff;
+    --accent2: #00ff88;
+    --red: #ff4560;
+    --text: #e2e8f0;
+    --muted: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 48px;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .container { width: 100%; max-width: 420px; }
+  .header { text-align: center; margin-bottom: 28px; padding-top: 24px; }
+  .header h1 {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header p { font-size: 12px; color: var(--muted); margin-top: 6px; letter-spacing: 1px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .section-label {
+    font-size: 11px; color: var(--muted);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .input-group { margin-bottom: 16px; }
+  .input-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .input-row {
+    display: flex; align-items: center;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .input-row:focus-within { border-color: var(--accent); }
+  .input-row input {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: var(--text); font-size: 18px;
+    font-family: 'Noto Sans KR', sans-serif; font-weight: 700;
+    padding: 14px 16px;
+  }
+  .input-row .unit { padding: 0 16px; font-size: 13px; color: var(--muted); font-weight: 300; }
+  .fee-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px;
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .fee-badge {
+    background: rgba(0,229,255,0.12); color: var(--accent);
+    font-size: 11px; padding: 3px 8px; border-radius: 20px; letter-spacing: 1px;
+  }
+  .fee-text { font-size: 13px; color: var(--muted); }
+  .fee-val { margin-left: auto; font-size: 13px; color: var(--text); font-weight: 700; }
+  .btn {
+    width: 100%; padding: 16px;
+    background: linear-gradient(135deg, var(--accent), #0096ff);
+    border: none; border-radius: 12px;
+    color: #000; font-family: 'Black Han Sans', sans-serif;
+    font-size: 16px; letter-spacing: 2px;
+    cursor: pointer; transition: transform 0.15s, opacity 0.15s;
+    margin-top: 12px;
+  }
+  .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn-green { background: linear-gradient(135deg, var(--accent2), #00b894); }
+  .error-msg { color: var(--red); font-size: 12px; margin-top: 8px; display: none; }
+  /* 목표 매도가 결과 */
+  .target-result {
+    background: rgba(0,255,136,0.07);
+    border: 1px solid rgba(0,255,136,0.25);
+    border-radius: 12px; padding: 18px;
+    margin-top: 16px; display: none;
+    animation: slideUp 0.3s ease;
+  }
+  .target-result.visible { display: block; }
+  .t-label { font-size: 11px; color: var(--accent2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .target-price { font-family: 'Black Han Sans', sans-serif; font-size: 36px; color: var(--accent2); letter-spacing: -1px; }
+  .target-sub { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  /* 수익 계산 결과 */
+  .result-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    display: none; animation: slideUp 0.3s ease;
+    margin-bottom: 16px;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .result-card.visible { display: block; }
+  .profit-display {
+    text-align: center; padding: 20px 0;
+    border-bottom: 1px solid var(--border); margin-bottom: 20px;
+  }
+  .profit-label { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .profit-percent { font-family: 'Black Han Sans', sans-serif; font-size: 52px; line-height: 1; letter-spacing: -1px; }
+  .profit-percent.positive { color: var(--accent2); }
+  .profit-percent.negative { color: var(--red); }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .detail-item { background: var(--card2); border-radius: 10px; padding: 14px; }
+  .detail-item .d-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .detail-item .d-val { font-size: 15px; font-weight: 700; color: var(--text); }
+  .detail-item .d-val.pos { color: var(--accent2); }
+  .detail-item .d-val.neg { color: var(--red); }
+  .reset-btn {
+    width: 100%; padding: 12px;
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 10px; color: var(--muted);
+    font-family: 'Noto Sans KR', sans-serif; font-size: 13px;
+    cursor: pointer; margin-top: 16px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>코인 수익 계산기</h1>
+    <p>UPBIT · 수수료 자동 반영</p>
+  </div>
+
+  <!-- ① 수익률 계산 -->
+  <div class="card">
+    <div class="section-label">수익률 계산 (매수가 → 매도가)</div>
+    <div class="input-group">
+      <label>매수가 (산 가격)</label>
+      <div class="input-row">
+        <input type="number" id="buyPrice" placeholder="0" inputmode="decimal">
+        <span class="unit">원</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>매도가 (판 가격)</label>
+      <div class="input-row">
+        <input type="number" id="sellPrice" placeholder="0" inputmode="decimal">
+        <span class="unit">원</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>투자금액 <span style="color:var(--muted);font-size:11px">(선택 · 입력 시 실제 손익 계산)</span></label>
+      <div class="input-row">
+        <input type="number" id="amount" placeholder="0" inputmode="decimal">
+        <span class="unit">원</span>
+      </div>
+    </div>
+    <div class="fee-row">
+      <span class="fee-badge">UPBIT</span>
+      <span class="fee-text">업비트 수수료</span>
+      <span class="fee-val">매수 0.05% + 매도 0.05%</span>
+    </div>
+    <p class="error-msg" id="errorMsg">매수가와 매도가를 모두 입력해주세요.</p>
+    <button class="btn" onclick="calculate()">수익 계산하기</button>
+  </div>
+
+  <!-- 수익률 결과 -->
+  <div class="result-card" id="resultCard">
+    <div class="section-label">계산 결과</div>
+    <div class="profit-display">
+      <div class="profit-label">수수료 반영 순수익률</div>
+      <div class="profit-percent" id="profitPercent">0%</div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <div class="d-label">실제 매수가 (수수료+)</div>
+        <div class="d-val" id="realBuy">-</div>
+      </div>
+      <div class="detail-item">
+        <div class="d-label">실제 매도가 (수수료-)</div>
+        <div class="d-val" id="realSell">-</div>
+      </div>
+      <div class="detail-item">
+        <div class="d-label">수수료 미반영 수익률</div>
+        <div class="d-val" id="rawPercent">-</div>
+      </div>
+      <div class="detail-item">
+        <div class="d-label">수수료 손해분</div>
+        <div class="d-val neg" id="feeImpact">-</div>
+      </div>
+      <div class="detail-item" id="pnlItem" style="display:none">
+        <div class="d-label">실제 손익금액</div>
+        <div class="d-val" id="pnlVal">-</div>
+      </div>
+      <div class="detail-item" id="feeAmtItem" style="display:none">
+        <div class="d-label">지불한 수수료</div>
+        <div class="d-val neg" id="feeAmt">-</div>
+      </div>
+    </div>
+    <button class="reset-btn" onclick="resetCalc()">다시 계산하기</button>
+  </div>
+
+  <!-- ② 목표 매도가 계산 -->
+  <div class="card">
+    <div class="section-label">목표 매도가 계산기</div>
+    <div class="input-group">
+      <label>매수가 (산 가격)</label>
+      <div class="input-row">
+        <input type="number" id="targetBuy" placeholder="0" inputmode="decimal">
+        <span class="unit">원</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>원하는 순수익률</label>
+      <div class="input-row">
+        <input type="number" id="targetPercent" placeholder="예) 7.5" inputmode="decimal">
+        <span class="unit">%</span>
+      </div>
+    </div>
+    <div class="fee-row">
+      <span class="fee-badge">UPBIT</span>
+      <span class="fee-text">수수료 자동 반영</span>
+      <span class="fee-val">0.05% × 2</span>
+    </div>
+    <p class="error-msg" id="targetErrorMsg">매수가와 목표 수익률을 입력해주세요.</p>
+    <button class="btn btn-green" onclick="calcTarget()">목표 매도가 계산</button>
+
+    <div class="target-result" id="targetResult">
+      <div class="t-label">이 가격에 팔아야 해요</div>
+      <div class="target-price" id="targetPrice">-</div>
+      <div class="target-sub" id="targetSub"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function fmt(n) {
+    return n.toLocaleString('ko-KR', { maximumFractionDigits: 4 });
+  }
+
+  function calculate() {
+    const buy = parseFloat(document.getElementById('buyPrice').value);
+    const sell = parseFloat(document.getElementById('sellPrice').value);
+    const amount = parseFloat(document.getElementById('amount').value);
+    const errEl = document.getElementById('errorMsg');
+
+    if (!buy || !sell || buy <= 0 || sell <= 0) {
+      errEl.style.display = 'block'; return;
+    }
+    errEl.style.display = 'none';
+
+    const FEE = 0.0005;
+    const realBuy = buy * (1 + FEE);
+    const realSell = sell * (1 - FEE);
+    const profitRate = ((realSell - realBuy) / realBuy) * 100;
+    const rawRate = ((sell - buy) / buy) * 100;
+    const feeImpact = rawRate - profitRate;
+
+    document.getElementById('realBuy').textContent = fmt(realBuy) + '원';
+    document.getElementById('realSell').textContent = fmt(realSell) + '원';
+
+    const rawEl = document.getElementById('rawPercent');
+    rawEl.textContent = (rawRate >= 0 ? '+' : '') + rawRate.toFixed(4) + '%';
+    rawEl.className = 'd-val ' + (rawRate >= 0 ? 'pos' : 'neg');
+    document.getElementById('feeImpact').textContent = '-' + feeImpact.toFixed(4) + '%';
+
+    const pEl = document.getElementById('profitPercent');
+    pEl.textContent = (profitRate >= 0 ? '+' : '') + profitRate.toFixed(4) + '%';
+    pEl.className = 'profit-percent ' + (profitRate >= 0 ? 'positive' : 'negative');
+
+    if (amount && amount > 0) {
+      const coins = amount / realBuy;
+      const proceeds = coins * realSell;
+      const pnl = proceeds - amount;
+      const totalFee = amount * FEE + (coins * sell) * FEE;
+      document.getElementById('pnlItem').style.display = 'block';
+      document.getElementById('feeAmtItem').style.display = 'block';
+      const pnlEl = document.getElementById('pnlVal');
+      pnlEl.textContent = (pnl >= 0 ? '+' : '') + fmt(Math.round(pnl)) + '원';
+      pnlEl.className = 'd-val ' + (pnl >= 0 ? 'pos' : 'neg');
+      document.getElementById('feeAmt').textContent = '약 ' + fmt(Math.round(totalFee)) + '원';
+    } else {
+      document.getElementById('pnlItem').style.display = 'none';
+      document.getElementById('feeAmtItem').style.display = 'none';
+    }
+    document.getElementById('resultCard').classList.add('visible');
+  }
+
+  function resetCalc() {
+    document.getElementById('buyPrice').value = '';
+    document.getElementById('sellPrice').value = '';
+    document.getElementById('amount').value = '';
+    document.getElementById('resultCard').classList.remove('visible');
+    document.getElementById('errorMsg').style.display = 'none';
+  }
+
+  function calcTarget() {
+    const buy = parseFloat(document.getElementById('targetBuy').value);
+    const pct = parseFloat(document.getElementById('targetPercent').value);
+    const errEl = document.getElementById('targetErrorMsg');
+
+    if (!buy || isNaN(pct) || buy <= 0) {
+      errEl.style.display = 'block'; return;
+    }
+    errEl.style.display = 'none';
+
+    // 역산 공식: sell = (pct/100 + 1) * buy*(1+FEE) / (1-FEE)
+    const FEE = 0.0005;
+    const realBuy = buy * (1 + FEE);
+    const targetSell = (pct / 100 + 1) * realBuy / (1 - FEE);
+    const diffAmt = targetSell - buy;
+    const diffPct = (targetSell - buy) / buy * 100;
+
+    document.getElementById('targetPrice').textContent = fmt(Math.ceil(targetSell)) + '원';
+    document.getElementById('targetSub').textContent =
+      '매수가 대비 +' + fmt(Math.ceil(diffAmt)) + '원\n' +
+      '호가 상승분 +' + diffPct.toFixed(2) + '% · 수수료 포함 순수익 ' + pct + '%';
+    document.getElementById('targetResult').classList.add('visible');
+  }
+</script>
+</body>
+</html>

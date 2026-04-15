@@ -3,312 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>코인 수익 계산기</title>
+<title>코인 계산기</title>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0e1a;
-    --card: #111827;
-    --card2: #1a2235;
-    --border: #1f2d45;
-    --accent: #00e5ff;
-    --accent2: #00ff88;
-    --red: #ff4560;
-    --text: #e2e8f0;
-    --muted: #64748b;
+    --bg: #0a0e1a; --card: #111827; --card2: #1a2235;
+    --border: #1f2d45; --accent: #00e5ff; --accent2: #00ff88;
+    --red: #ff4560; --yellow: #ffd93d; --text: #e2e8f0; --muted: #64748b;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--bg); color: var(--text);
     font-family: 'Noto Sans KR', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 24px 16px 48px;
-  }
-  body::before {
-    content: '';
-    position: fixed;
-    top: -200px; left: -200px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
-    pointer-events: none;
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; padding: 0 0 80px;
   }
   .container { width: 100%; max-width: 420px; }
-  .header { text-align: center; margin-bottom: 28px; padding-top: 24px; }
+
+  /* 헤더 */
+  .header { text-align: center; padding: 28px 16px 16px; }
   .header h1 {
-    font-family: 'Black Han Sans', sans-serif;
-    font-size: 28px;
-    letter-spacing: 2px;
+    font-family: 'Black Han Sans', sans-serif; font-size: 26px; letter-spacing: 2px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
-  .header p { font-size: 12px; color: var(--muted); margin-top: 6px; letter-spacing: 1px; }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 16px;
+  .header p { font-size: 11px; color: var(--muted); margin-top: 5px; letter-spacing: 1px; }
+
+  /* 탭 */
+  .tabs {
+    display: flex; width: 100%; position: sticky; top: 0; z-index: 100;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    padding: 0 16px;
   }
-  .section-label {
-    font-size: 11px; color: var(--muted);
-    letter-spacing: 2px; text-transform: uppercase;
-    margin-bottom: 16px;
+  .tab-btn {
+    flex: 1; padding: 13px 4px; background: none; border: none;
+    color: var(--muted); font-family: 'Black Han Sans', sans-serif;
+    font-size: 13px; letter-spacing: 1px; cursor: pointer;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
   }
-  .input-group { margin-bottom: 16px; }
-  .input-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-  .input-row {
-    display: flex; align-items: center;
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: 10px; overflow: hidden;
-    transition: border-color 0.2s;
-  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* 탭 콘텐츠 */
+  .tab-content { display: none; padding: 16px; }
+  .tab-content.active { display: block; }
+
+  /* 공통 카드/인풋 */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .seed-card { background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(0,255,136,0.05)); border: 1px solid rgba(0,229,255,0.2); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .current-card { background: linear-gradient(135deg, rgba(255,217,61,0.08), rgba(255,107,53,0.05)); border: 1px solid rgba(255,217,61,0.2); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .section-label { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+  .seed-card .section-label { color: var(--accent); }
+  .current-card .section-label { color: var(--yellow); }
+  .input-group { margin-bottom: 12px; }
+  .input-group label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .input-row { display: flex; align-items: center; background: var(--card2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color 0.2s; }
   .input-row:focus-within { border-color: var(--accent); }
-  .input-row input {
-    flex: 1; background: transparent; border: none; outline: none;
-    color: var(--text); font-size: 18px;
-    font-family: 'Noto Sans KR', sans-serif; font-weight: 700;
-    padding: 14px 16px;
-  }
-  .input-row .unit { padding: 0 16px; font-size: 13px; color: var(--muted); font-weight: 300; }
-  .fee-row {
-    display: flex; align-items: center; gap: 10px;
-    padding: 12px 16px;
-    background: var(--card2); border: 1px solid var(--border);
-    border-radius: 10px;
-  }
-  .fee-badge {
-    background: rgba(0,229,255,0.12); color: var(--accent);
-    font-size: 11px; padding: 3px 8px; border-radius: 20px; letter-spacing: 1px;
-  }
-  .fee-text { font-size: 13px; color: var(--muted); }
-  .fee-val { margin-left: auto; font-size: 13px; color: var(--text); font-weight: 700; }
-  .btn {
-    width: 100%; padding: 16px;
-    background: linear-gradient(135deg, var(--accent), #0096ff);
-    border: none; border-radius: 12px;
-    color: #000; font-family: 'Black Han Sans', sans-serif;
-    font-size: 16px; letter-spacing: 2px;
-    cursor: pointer; transition: transform 0.15s, opacity 0.15s;
-    margin-top: 12px;
-  }
+  .input-row input { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-size: 16px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; padding: 12px 14px; }
+  .input-row .unit { padding: 0 14px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .fee-row { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--card2); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 4px; }
+  .fee-badge { background: rgba(0,229,255,0.12); color: var(--accent); font-size: 11px; padding: 3px 8px; border-radius: 20px; }
+  .fee-text { font-size: 12px; color: var(--muted); }
+  .fee-val { margin-left: auto; font-size: 12px; color: var(--text); font-weight: 700; }
+
+  .btn { width: 100%; padding: 13px; border: none; border-radius: 12px; color: #000; font-family: 'Black Han Sans', sans-serif; font-size: 15px; letter-spacing: 2px; cursor: pointer; transition: transform 0.15s, opacity 0.15s; margin-top: 10px; }
   .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-  .btn:active { transform: translateY(0); }
+  .btn-blue { background: linear-gradient(135deg, var(--accent), #0096ff); }
   .btn-green { background: linear-gradient(135deg, var(--accent2), #00b894); }
+  .btn-yellow { background: linear-gradient(135deg, var(--yellow), #ff6b35); }
+  .btn-orange { background: linear-gradient(135deg, #ff6b35, #ff4560); }
   .error-msg { color: var(--red); font-size: 12px; margin-top: 8px; display: none; }
+  .reset-btn { width: 100%; padding: 11px; background: transparent; border: 1px solid var(--border); border-radius: 10px; color: var(--muted); font-family: 'Noto Sans KR', sans-serif; font-size: 13px; cursor: pointer; margin-top: 12px; transition: border-color 0.2s, color 0.2s; }
+  .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* 목표 매도가 결과 */
-  .target-result {
-    background: rgba(0,255,136,0.07);
-    border: 1px solid rgba(0,255,136,0.25);
-    border-radius: 12px; padding: 18px;
-    margin-top: 16px; display: none;
-    animation: slideUp 0.3s ease;
-  }
-  .target-result.visible { display: block; }
-  .t-label { font-size: 11px; color: var(--accent2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-  .target-price { font-family: 'Black Han Sans', sans-serif; font-size: 36px; color: var(--accent2); letter-spacing: -1px; }
-  .target-sub { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.8; }
-  .target-sub span { display: block; }
-  .target-sub .highlight { color: var(--accent2); font-weight: 700; font-size: 14px; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* 수익 계산 결과 */
-  .result-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 24px;
-    display: none; animation: slideUp 0.3s ease;
-    margin-bottom: 16px;
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* 탭1 수익률 결과 */
+  .result-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: none; animation: slideUp 0.3s ease; margin-bottom: 16px; }
   .result-card.visible { display: block; }
-  .profit-display {
-    text-align: center; padding: 20px 0;
-    border-bottom: 1px solid var(--border); margin-bottom: 20px;
-  }
-  .profit-label { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-  .profit-percent { font-family: 'Black Han Sans', sans-serif; font-size: 52px; line-height: 1; letter-spacing: -1px; }
+  .profit-display { text-align: center; padding: 16px 0; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .profit-label { font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-bottom: 8px; }
+  .profit-percent { font-family: 'Black Han Sans', sans-serif; font-size: 48px; line-height: 1; }
   .profit-percent.positive { color: var(--accent2); }
   .profit-percent.negative { color: var(--red); }
-  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .detail-item { background: var(--card2); border-radius: 10px; padding: 14px; }
-  .detail-item .d-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
-  .detail-item .d-val { font-size: 15px; font-weight: 700; color: var(--text); }
-  .detail-item .d-val.pos { color: var(--accent2); }
-  .detail-item .d-val.neg { color: var(--red); }
-  .reset-btn {
-    width: 100%; padding: 12px;
-    background: transparent; border: 1px solid var(--border);
-    border-radius: 10px; color: var(--muted);
-    font-family: 'Noto Sans KR', sans-serif; font-size: 13px;
-    cursor: pointer; margin-top: 16px;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .detail-item { background: var(--card2); border-radius: 10px; padding: 12px; }
+  .d-label { font-size: 10px; color: var(--muted); margin-bottom: 5px; }
+  .d-val { font-size: 14px; font-weight: 700; }
+  .d-val.pos { color: var(--accent2); }
+  .d-val.neg { color: var(--red); }
+
+  /* 탭2 목표 매도가 결과 */
+  .target-result { background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.25); border-radius: 12px; padding: 18px; margin-top: 14px; display: none; animation: slideUp 0.3s ease; }
+  .target-result.visible { display: block; }
+  .t-label { font-size: 11px; color: var(--accent2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .target-price { font-family: 'Black Han Sans', sans-serif; font-size: 34px; color: var(--accent2); }
+  .target-sub { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.8; }
+  .target-sub span { display: block; }
+
+  /* 탭3 시드 */
+  .seed-summary { background: rgba(0,0,0,0.25); border-radius: 10px; padding: 14px; margin-top: 14px; }
+  .seed-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .seed-total-label { font-size: 12px; color: var(--muted); }
+  .seed-total-val { font-family: 'Black Han Sans', sans-serif; font-size: 20px; color: var(--accent); }
+  .seed-history { display: flex; flex-direction: column; gap: 7px; }
+  .seed-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+  .sr-date { color: var(--muted); }
+  .sr-type { color: var(--accent2); font-size: 10px; padding: 2px 6px; background: rgba(0,255,136,0.1); border-radius: 10px; }
+  .sr-amt { color: var(--text); font-weight: 700; }
+  .sr-del { color: var(--red); background: none; border: none; cursor: pointer; font-size: 12px; padding: 2px 6px; }
+
+  /* 탭3 현재 수익 결과 */
+  .current-result { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 16px; margin-top: 14px; display: none; animation: slideUp 0.3s ease; }
+  .current-result.visible { display: block; }
+  .cr-main { text-align: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .cr-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-bottom: 6px; }
+  .cr-amount { font-family: 'Black Han Sans', sans-serif; font-size: 34px; }
+  .cr-amount.pos { color: var(--accent2); }
+  .cr-amount.neg { color: var(--red); }
+  .cr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cr-item { background: var(--card2); border-radius: 8px; padding: 10px; }
+  .ci-label { font-size: 10px; color: var(--muted); margin-bottom: 4px; }
+  .ci-val { font-size: 13px; font-weight: 700; }
+  .ci-val.pos { color: var(--accent2); }
+  .ci-val.neg { color: var(--red); }
+  .ci-val.neutral { color: var(--accent); }
+
+  /* 탭3 요약 */
+  .sum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sum-full { grid-column: 1 / -1; }
+  .sum-item { background: var(--card2); border-radius: 10px; padding: 13px; }
+  .sum-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .sum-val { font-family: 'Black Han Sans', sans-serif; font-size: 18px; }
+  .sum-val.pos { color: var(--accent2); }
+  .sum-val.neg { color: var(--red); }
+  .sum-val.neutral { color: var(--accent); }
+
+  /* 탭3 거래 기록 */
+  .record-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 10px; animation: slideUp 0.3s ease; position: relative; }
+  .record-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .record-coin { font-family: 'Black Han Sans', sans-serif; font-size: 15px; color: var(--accent); }
+  .record-date { font-size: 11px; color: var(--muted); }
+  .record-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; }
+  .record-cell { background: var(--card2); border-radius: 8px; padding: 9px; }
+  .rc-label { font-size: 10px; color: var(--muted); margin-bottom: 3px; }
+  .rc-val { font-size: 12px; font-weight: 700; }
+  .rc-val.pos { color: var(--accent2); }
+  .rc-val.neg { color: var(--red); }
+  .delete-btn { position: absolute; top: 12px; right: 12px; background: rgba(255,69,96,0.15); border: none; color: var(--red); font-size: 12px; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; }
+  .empty-msg { text-align: center; color: var(--muted); font-size: 13px; padding: 28px 0; }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-    <h1>코인 수익 계산기</h1>
+    <h1>코인 계산기</h1>
     <p>UPBIT · 수수료 자동 반영</p>
   </div>
 
-  <!-- ① 수익률 계산 -->
-  <div class="card">
-    <div class="section-label">수익률 계산 (매수가 → 매도가)</div>
-    <div class="input-group">
-      <label>매수가 (산 가격)</label>
-      <div class="input-row">
-        <input type="number" id="buyPrice" placeholder="0" inputmode="decimal">
-        <span class="unit">원</span>
-      </div>
-    </div>
-    <div class="input-group">
-      <label>매도가 (판 가격)</label>
-      <div class="input-row">
-        <input type="number" id="sellPrice" placeholder="0" inputmode="decimal">
-        <span class="unit">원</span>
-      </div>
-    </div>
-    <div class="input-group">
-      <label>투자금액 <span style="color:var(--muted);font-size:11px">(선택 · 입력 시 실제 손익 계산)</span></label>
-      <div class="input-row">
-        <input type="number" id="amount" placeholder="0" inputmode="decimal">
-        <span class="unit">원</span>
-      </div>
-    </div>
-    <div class="fee-row">
-      <span class="fee-badge">UPBIT</span>
-      <span class="fee-text">업비트 수수료</span>
-      <span class="fee-val">매수 0.05% + 매도 0.05%</span>
-    </div>
-    <p class="error-msg" id="errorMsg">매수가와 매도가를 모두 입력해주세요.</p>
-    <button class="btn" onclick="calculate()">수익 계산하기</button>
+  <!-- 탭 버튼 -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('tab1', this)">수익률</button>
+    <button class="tab-btn" onclick="switchTab('tab2', this)">목표가</button>
+    <button class="tab-btn" onclick="switchTab('tab3', this)">기록장</button>
   </div>
 
-  <!-- 수익률 결과 -->
-  <div class="result-card" id="resultCard">
-    <div class="section-label">계산 결과</div>
-    <div class="profit-display">
-      <div class="profit-label">수수료 반영 순수익률</div>
-      <div class="profit-percent" id="profitPercent">0%</div>
+  <!-- 탭1: 수익률 계산 -->
+  <div class="tab-content active" id="tab1">
+    <div class="card">
+      <div class="section-label">수익률 계산</div>
+      <div class="input-group">
+        <label>매수가 (산 가격)</label>
+        <div class="input-row"><input type="number" id="buyPrice" placeholder="0" inputmode="decimal"><span class="unit">원</span></div>
+      </div>
+      <div class="input-group">
+        <label>매도가 (판 가격)</label>
+        <div class="input-row"><input type="number" id="sellPrice" placeholder="0" inputmode="decimal"><span class="unit">원</span></div>
+      </div>
+      <div class="input-group">
+        <label>투자금액 <span style="color:var(--muted);font-size:11px">(선택 · 실제 손익 계산)</span></label>
+        <div class="input-row"><input type="number" id="amount" placeholder="0" inputmode="decimal"><span class="unit">원</span></div>
+      </div>
+      <div class="fee-row">
+        <span class="fee-badge">UPBIT</span>
+        <span class="fee-text">업비트 수수료</span>
+        <span class="fee-val">매수 0.05% + 매도 0.05%</span>
+      </div>
+      <p class="error-msg" id="errorMsg">매수가와 매도가를 모두 입력해주세요.</p>
+      <button class="btn btn-blue" onclick="calculate()">수익 계산하기</button>
     </div>
-    <div class="detail-grid">
-      <div class="detail-item">
-        <div class="d-label">실제 매수가 (수수료+)</div>
-        <div class="d-val" id="realBuy">-</div>
-      </div>
-      <div class="detail-item">
-        <div class="d-label">실제 매도가 (수수료-)</div>
-        <div class="d-val" id="realSell">-</div>
-      </div>
-      <div class="detail-item">
-        <div class="d-label">수수료 미반영 수익률</div>
-        <div class="d-val" id="rawPercent">-</div>
-      </div>
-      <div class="detail-item">
-        <div class="d-label">수수료 손해분</div>
-        <div class="d-val neg" id="feeImpact">-</div>
-      </div>
-      <div class="detail-item" id="pnlItem" style="display:none">
-        <div class="d-label">실제 손익금액</div>
-        <div class="d-val" id="pnlVal">-</div>
-      </div>
-      <div class="detail-item" id="feeAmtItem" style="display:none">
-        <div class="d-label">지불한 수수료</div>
-        <div class="d-val neg" id="feeAmt">-</div>
-      </div>
-    </div>
-    <button class="reset-btn" onclick="resetCalc()">다시 계산하기</button>
-  </div>
 
-  <!-- ② 목표 매도가 계산 -->
-  <div class="card">
-    <div class="section-label">목표 매도가 계산기</div>
-    <div class="input-group">
-      <label>매수가 (산 가격)</label>
-      <div class="input-row">
-        <input type="number" id="targetBuy" placeholder="0" inputmode="decimal">
-        <span class="unit">원</span>
+    <div class="result-card" id="resultCard">
+      <div class="section-label">계산 결과</div>
+      <div class="profit-display">
+        <div class="profit-label">수수료 반영 순수익률</div>
+        <div class="profit-percent" id="profitPercent">0%</div>
       </div>
-    </div>
-    <div class="input-group">
-      <label>원하는 순수익률</label>
-      <div class="input-row">
-        <input type="number" id="targetPercent" placeholder="예) 7.5" inputmode="decimal">
-        <span class="unit">%</span>
+      <div class="detail-grid">
+        <div class="detail-item"><div class="d-label">실제 매수가 (수수료+)</div><div class="d-val" id="realBuy">-</div></div>
+        <div class="detail-item"><div class="d-label">실제 매도가 (수수료-)</div><div class="d-val" id="realSell">-</div></div>
+        <div class="detail-item"><div class="d-label">수수료 미반영 수익률</div><div class="d-val" id="rawPercent">-</div></div>
+        <div class="detail-item"><div class="d-label">수수료 손해분</div><div class="d-val neg" id="feeImpact">-</div></div>
+        <div class="detail-item" id="pnlItem" style="display:none"><div class="d-label">실제 손익금액</div><div class="d-val" id="pnlVal">-</div></div>
+        <div class="detail-item" id="feeAmtItem" style="display:none"><div class="d-label">지불한 수수료</div><div class="d-val neg" id="feeAmt">-</div></div>
       </div>
-    </div>
-    <div class="input-group">
-      <label>투자 원금 <span style="color:var(--muted);font-size:11px">(선택 · 입력 시 실제 이익금 계산)</span></label>
-      <div class="input-row">
-        <input type="number" id="targetAmount" placeholder="0" inputmode="decimal">
-        <span class="unit">원</span>
-      </div>
-    </div>
-    <div class="fee-row">
-      <span class="fee-badge">UPBIT</span>
-      <span class="fee-text">수수료 자동 반영</span>
-      <span class="fee-val">0.05% × 2</span>
-    </div>
-    <p class="error-msg" id="targetErrorMsg">매수가와 목표 수익률을 입력해주세요.</p>
-    <button class="btn btn-green" onclick="calcTarget()">목표 매도가 계산</button>
-
-    <div class="target-result" id="targetResult">
-      <div class="t-label">이 가격에 팔아야 해요</div>
-      <div class="target-price" id="targetPrice">-</div>
-      <div class="target-sub" id="targetSub"></div>
+      <button class="reset-btn" onclick="resetCalc()">다시 계산하기</button>
     </div>
   </div>
 
+  <!-- 탭2: 목표 매도가 -->
+  <div class="tab-content" id="tab2">
+    <div class="card">
+      <div class="section-label">목표 매도가 계산기</div>
+      <div class="input-group">
+        <label>매수가 (산 가격)</label>
+        <div class="input-row"><input type="number" id="targetBuy" placeholder="0" inputmode="decimal"><span class="unit">원</span></div>
+      </div>
+      <div class="input-group">
+        <label>원하는 순수익률</label>
+        <div class="input-row"><input type="number" id="targetPercent" placeholder="예) 7.5" inputmode="decimal"><span class="unit">%</span></div>
+      </div>
+      <div class="input-group">
+        <label>투자 원금 <span style="color:var(--muted);font-size:11px">(선택 · 실제 이익금 계산)</span></label>
+        <div class="input-row"><input type="number" id="targetAmount" placeholder="0" inputmode="decimal"><span class="unit">원</span></div>
+      </div>
+      <div class="fee-row">
+        <span class="fee-badge">UPBIT</span>
+        <span class="fee-text">수수료 자동 반영</span>
+        <span class="fee-val">0.05% × 2</span>
+      </div>
+      <p class="error-msg" id="targetErrorMsg">매수가와 목표 수익률을 입력해주세요.</p>
+      <button class="btn btn-green" onclick="calcTarget()">목표 매도가 계산</button>
+
+      <div class="target-result" id="targetResult">
+        <div class="t-label">이 가격에 팔아야 해요</div>
+        <div class="target-price" id="targetPrice">-</div>
+        <div class="target-sub" id="targetSub"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 탭3: 수익 기록장 -->
+  <div class="tab-content" id="tab3">
+    <!-- 시드머니 -->
+    <div class="seed-card">
+      <div class="section-label">💰 시드머니 관리</div>
+      <div class="input-group">
+        <label>추가할 시드머니</label>
+        <div class="input-row"><input type="number" id="seedInput" placeholder="0" inputmode="decimal"><span class="unit">원</span></div>
+      </div>
+      <div class="input-group">
+        <label>메모 (선택)</label>
+        <div class="input-row"><input type="text" id="seedMemo" placeholder="예) 최초 시드, 추가 입금"></div>
+      </div>
+      <button class="btn btn-blue" onclick="addSeed()">시드머니 추가</button>
+      <div class="seed-summary" id="seedSummary" style="display:none">
+        <div class="seed-total">
+          <span class="seed-total-label">총 시드머니</span>
+          <span class="seed-total-val" id="seedTotalVal">0원</span>
+        </div>
+        <div class="seed-history" id="seedHistory"></div>
+      </div>
+    </div>
+
+    <!-- 현재 보유금액 -->
+    <div class="current-card">
+      <div class="section-label">📊 현재 보유금액으로 수익 확인</div>
+      <div class="input-group">
+        <label>지금 내 코인 총 평가금액</label>
+        <div class="input-row"><input type="number" id="currentAmount" placeholder="0" inputmode="decimal"><span class="unit">원</span></div>
+      </div>
+      <p class="error-msg" id="currentErr">시드머니를 먼저 추가해주세요!</p>
+      <button class="btn btn-yellow" onclick="calcCurrent()">수익 확인하기</button>
+      <div class="current-result" id="currentResult">
+        <div class="cr-main">
+          <div class="cr-label">총 시드머니 대비 수익금</div>
+          <div class="cr-amount" id="crAmount">-</div>
+        </div>
+        <div class="cr-grid">
+          <div class="cr-item"><div class="ci-label">총 시드머니</div><div class="ci-val neutral" id="crSeed">-</div></div>
+          <div class="cr-item"><div class="ci-label">현재 금액</div><div class="ci-val neutral" id="crCurrent">-</div></div>
+          <div class="cr-item"><div class="ci-label">수익률</div><div class="ci-val" id="crRate">-</div></div>
+          <div class="cr-item"><div class="ci-label">상태</div><div class="ci-val" id="crStatus">-</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 거래 요약 -->
+    <div class="card">
+      <div class="section-label">거래 기록 요약</div>
+      <div class="sum-grid">
+        <div class="sum-item sum-full"><div class="sum-label">거래별 총 순수익</div><div class="sum-val pos" id="totalProfit">0원</div></div>
+        <div class="sum-item"><div class="sum-label">총 투자금</div><div class="sum-val neutral" id="totalInvest">0원</div></div>
+        <div class="sum-item"><div class="sum-label">거래 횟수</div><div class="sum-val neutral" id="totalCount">0회</div></div>
+        <div class="sum-item"><div class="sum-label">평균 수익률</div><div class="sum-val pos" id="avgRate">0%</div></div>
+        <div class="sum-item"><div class="sum-label">최고 수익</div><div class="sum-val pos" id="bestProfit">0원</div></div>
+      </div>
+    </div>
+
+    <!-- 거래 기록 입력 -->
+    <div class="card">
+      <div class="section-label">거래 기록 추가</div>
+      <div class="input-group">
+        <label>코인명</label>
+        <div class="input-row"><input type="text" id="coinName" placeholder="예) 비트코인, 이더리움"></div>
+      </div>
+      <div class="input-group">
+        <label>투자 원금</label>
+        <div class="input-row"><input type="number" id="invest" placeholder="0" inputmode="decimal"><span class="unit">원</span></div>
+      </div>
+      <div class="input-group">
+        <label>수익금액 (손실이면 마이너스)</label>
+        <div class="input-row"><input type="number" id="recProfit" placeholder="예) 15000 또는 -5000" inputmode="decimal"><span class="unit">원</span></div>
+      </div>
+      <div class="input-group">
+        <label>메모 (선택)</label>
+        <div class="input-row"><input type="text" id="memo" placeholder="예) 단타, 장투"></div>
+      </div>
+      <p class="error-msg" id="errMsg">코인명, 투자금, 수익금을 입력해주세요.</p>
+      <button class="btn btn-orange" onclick="addRecord()">기록 추가하기</button>
+    </div>
+
+    <!-- 거래 기록 리스트 -->
+    <div class="section-label" style="padding: 0 4px; margin-bottom: 12px;">거래 기록</div>
+    <div id="recordList"><div class="empty-msg">아직 기록이 없어요 😊</div></div>
+  </div>
 </div>
 
 <script>
-  function fmt(n) {
-    return n.toLocaleString('ko-KR', { maximumFractionDigits: 4 });
-  }
-  function fmtInt(n) {
-    return Math.round(n).toLocaleString('ko-KR');
+  const REC_KEY = 'coin_records';
+  const SEED_KEY = 'coin_seeds';
+  function fmt(n) { return Math.round(n).toLocaleString('ko-KR'); }
+  function fmtD(n) { return n.toLocaleString('ko-KR', { maximumFractionDigits: 4 }); }
+  function loadRecords() { try { return JSON.parse(localStorage.getItem(REC_KEY)) || []; } catch { return []; } }
+  function saveRecords(r) { localStorage.setItem(REC_KEY, JSON.stringify(r)); }
+  function loadSeeds() { try { return JSON.parse(localStorage.getItem(SEED_KEY)) || []; } catch { return []; } }
+  function saveSeeds(s) { localStorage.setItem(SEED_KEY, JSON.stringify(s)); }
+  function totalSeed() { return loadSeeds().reduce((s, r) => s + r.amount, 0); }
+
+  // 탭 전환
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
   }
 
+  // 탭1: 수익률 계산
   function calculate() {
     const buy = parseFloat(document.getElementById('buyPrice').value);
     const sell = parseFloat(document.getElementById('sellPrice').value);
     const amount = parseFloat(document.getElementById('amount').value);
     const errEl = document.getElementById('errorMsg');
-
-    if (!buy || !sell || buy <= 0 || sell <= 0) {
-      errEl.style.display = 'block'; return;
-    }
+    if (!buy || !sell || buy <= 0 || sell <= 0) { errEl.style.display = 'block'; return; }
     errEl.style.display = 'none';
-
     const FEE = 0.0005;
     const realBuy = buy * (1 + FEE);
     const realSell = sell * (1 - FEE);
     const profitRate = ((realSell - realBuy) / realBuy) * 100;
     const rawRate = ((sell - buy) / buy) * 100;
     const feeImpact = rawRate - profitRate;
-
-    document.getElementById('realBuy').textContent = fmt(realBuy) + '원';
-    document.getElementById('realSell').textContent = fmt(realSell) + '원';
-
+    document.getElementById('realBuy').textContent = fmtD(realBuy) + '원';
+    document.getElementById('realSell').textContent = fmtD(realSell) + '원';
     const rawEl = document.getElementById('rawPercent');
     rawEl.textContent = (rawRate >= 0 ? '+' : '') + rawRate.toFixed(4) + '%';
     rawEl.className = 'd-val ' + (rawRate >= 0 ? 'pos' : 'neg');
     document.getElementById('feeImpact').textContent = '-' + feeImpact.toFixed(4) + '%';
-
     const pEl = document.getElementById('profitPercent');
     pEl.textContent = (profitRate >= 0 ? '+' : '') + profitRate.toFixed(4) + '%';
     pEl.className = 'profit-percent ' + (profitRate >= 0 ? 'positive' : 'negative');
-
     if (amount && amount > 0) {
       const coins = amount / realBuy;
       const proceeds = coins * realSell;
@@ -317,9 +379,9 @@
       document.getElementById('pnlItem').style.display = 'block';
       document.getElementById('feeAmtItem').style.display = 'block';
       const pnlEl = document.getElementById('pnlVal');
-      pnlEl.textContent = (pnl >= 0 ? '+' : '') + fmtInt(pnl) + '원';
+      pnlEl.textContent = (pnl >= 0 ? '+' : '') + fmt(pnl) + '원';
       pnlEl.className = 'd-val ' + (pnl >= 0 ? 'pos' : 'neg');
-      document.getElementById('feeAmt').textContent = '약 ' + fmtInt(totalFee) + '원';
+      document.getElementById('feeAmt').textContent = '약 ' + fmt(totalFee) + '원';
     } else {
       document.getElementById('pnlItem').style.display = 'none';
       document.getElementById('feeAmtItem').style.display = 'none';
@@ -328,49 +390,167 @@
   }
 
   function resetCalc() {
-    document.getElementById('buyPrice').value = '';
-    document.getElementById('sellPrice').value = '';
-    document.getElementById('amount').value = '';
+    ['buyPrice','sellPrice','amount'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('resultCard').classList.remove('visible');
     document.getElementById('errorMsg').style.display = 'none';
   }
 
+  // 탭2: 목표 매도가
   function calcTarget() {
     const buy = parseFloat(document.getElementById('targetBuy').value);
     const pct = parseFloat(document.getElementById('targetPercent').value);
     const amount = parseFloat(document.getElementById('targetAmount').value);
     const errEl = document.getElementById('targetErrorMsg');
-
-    if (!buy || isNaN(pct) || buy <= 0) {
-      errEl.style.display = 'block'; return;
-    }
+    if (!buy || isNaN(pct) || buy <= 0) { errEl.style.display = 'block'; return; }
     errEl.style.display = 'none';
-
     const FEE = 0.0005;
     const realBuy = buy * (1 + FEE);
     const targetSell = (pct / 100 + 1) * realBuy / (1 - FEE);
     const diffAmt = targetSell - buy;
-    const diffPct = (targetSell - buy) / buy * 100;
-
-    document.getElementById('targetPrice').textContent = fmt(Math.ceil(targetSell)) + '원';
-
-    let subHTML = '';
-    subHTML += '<span>매수가 대비 +' + fmt(diffAmt.toFixed(2)) + '원 (호가 +' + diffPct.toFixed(2) + '%)</span>';
-    subHTML += '<span>수수료 포함 순수익률 <b style="color:var(--accent2)">' + pct + '%</b></span>';
-
+    const diffPct = diffAmt / buy * 100;
+    document.getElementById('targetPrice').textContent = fmtD(Math.ceil(targetSell)) + '원';
+    let sub = `<span>매수가 대비 +${fmtD(diffAmt.toFixed(2))}원 (호가 +${diffPct.toFixed(2)}%)</span>`;
+    sub += `<span>수수료 포함 순수익률 <b style="color:var(--accent2)">${pct}%</b></span>`;
     if (amount && amount > 0) {
+      const FEE = 0.0005;
       const coins = amount / realBuy;
       const proceeds = coins * targetSell * (1 - FEE);
       const profit = proceeds - amount;
       const totalFee = amount * FEE + coins * targetSell * FEE;
-      subHTML += '<span style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,255,136,0.2)">💰 실제 이익금 <span class="highlight">+' + fmtInt(profit) + '원</span></span>';
-      subHTML += '<span>최종 수령액 ' + fmtInt(amount + profit) + '원</span>';
-      subHTML += '<span>지불 수수료 약 ' + fmtInt(totalFee) + '원</span>';
+      sub += `<span style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,255,136,0.2)">💰 실제 이익금 <b style="color:var(--accent2);font-size:14px">+${fmt(profit)}원</b></span>`;
+      sub += `<span>최종 수령액 ${fmt(amount + profit)}원</span>`;
+      sub += `<span>지불 수수료 약 ${fmt(totalFee)}원</span>`;
     }
-
-    document.getElementById('targetSub').innerHTML = subHTML;
+    document.getElementById('targetSub').innerHTML = sub;
     document.getElementById('targetResult').classList.add('visible');
   }
+
+  // 탭3: 시드머니
+  function addSeed() {
+    const val = parseFloat(document.getElementById('seedInput').value);
+    const memo = document.getElementById('seedMemo').value.trim();
+    if (!val || val <= 0) return;
+    const seeds = loadSeeds();
+    const now = new Date();
+    seeds.push({ amount: val, memo: memo || '입금', date: `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`, id: Date.now() });
+    saveSeeds(seeds);
+    document.getElementById('seedInput').value = '';
+    document.getElementById('seedMemo').value = '';
+    renderSeed();
+  }
+
+  function deleteSeed(id) {
+    if (!confirm('삭제할까요?')) return;
+    saveSeeds(loadSeeds().filter(s => s.id !== id));
+    renderSeed();
+  }
+
+  function renderSeed() {
+    const seeds = loadSeeds();
+    const summary = document.getElementById('seedSummary');
+    if (seeds.length === 0) { summary.style.display = 'none'; return; }
+    summary.style.display = 'block';
+    document.getElementById('seedTotalVal').textContent = fmt(totalSeed()) + '원';
+    document.getElementById('seedHistory').innerHTML = seeds.map(s =>
+      `<div class="seed-row"><span class="sr-date">${s.date}</span><span class="sr-type">${s.memo}</span><span class="sr-amt">+${fmt(s.amount)}원</span><button class="sr-del" onclick="deleteSeed(${s.id})">✕</button></div>`
+    ).join('');
+  }
+
+  // 탭3: 현재 수익
+  function calcCurrent() {
+    const seed = totalSeed();
+    const current = parseFloat(document.getElementById('currentAmount').value);
+    const errEl = document.getElementById('currentErr');
+    if (seed <= 0) { errEl.textContent = '시드머니를 먼저 추가해주세요!'; errEl.style.display = 'block'; return; }
+    if (!current || current <= 0) { errEl.textContent = '현재 보유금액을 입력해주세요!'; errEl.style.display = 'block'; return; }
+    errEl.style.display = 'none';
+    const diff = current - seed;
+    const rate = (diff / seed) * 100;
+    const isPos = diff >= 0;
+    const amountEl = document.getElementById('crAmount');
+    amountEl.textContent = (isPos ? '+' : '') + fmt(diff) + '원';
+    amountEl.className = 'cr-amount ' + (isPos ? 'pos' : 'neg');
+    document.getElementById('crSeed').textContent = fmt(seed) + '원';
+    document.getElementById('crCurrent').textContent = fmt(current) + '원';
+    const rateEl = document.getElementById('crRate');
+    rateEl.textContent = (isPos ? '+' : '') + rate.toFixed(2) + '%';
+    rateEl.className = 'ci-val ' + (isPos ? 'pos' : 'neg');
+    const statusEl = document.getElementById('crStatus');
+    statusEl.textContent = isPos ? '수익 중 📈' : '손실 중 📉';
+    statusEl.className = 'ci-val ' + (isPos ? 'pos' : 'neg');
+    document.getElementById('currentResult').classList.add('visible');
+  }
+
+  // 탭3: 거래 기록
+  function updateSummary() {
+    const records = loadRecords();
+    const totalProfit = records.reduce((s, r) => s + r.profit, 0);
+    const totalInvest = records.reduce((s, r) => s + r.invest, 0);
+    const avgRate = records.length > 0 ? records.reduce((s, r) => s + (r.profit / r.invest * 100), 0) / records.length : 0;
+    const bestProfit = records.length > 0 ? Math.max(...records.map(r => r.profit)) : 0;
+    const tp = document.getElementById('totalProfit');
+    tp.textContent = (totalProfit >= 0 ? '+' : '') + fmt(totalProfit) + '원';
+    tp.className = 'sum-val ' + (totalProfit >= 0 ? 'pos' : 'neg');
+    document.getElementById('totalInvest').textContent = fmt(totalInvest) + '원';
+    document.getElementById('totalCount').textContent = records.length + '회';
+    const ar = document.getElementById('avgRate');
+    ar.textContent = (avgRate >= 0 ? '+' : '') + avgRate.toFixed(2) + '%';
+    ar.className = 'sum-val ' + (avgRate >= 0 ? 'pos' : 'neg');
+    const bp = document.getElementById('bestProfit');
+    bp.textContent = (bestProfit >= 0 ? '+' : '') + fmt(bestProfit) + '원';
+    bp.className = 'sum-val ' + (bestProfit >= 0 ? 'pos' : 'neg');
+  }
+
+  function renderRecords() {
+    updateSummary();
+    const records = loadRecords();
+    const list = document.getElementById('recordList');
+    if (records.length === 0) { list.innerHTML = '<div class="empty-msg">아직 기록이 없어요 😊</div>'; return; }
+    list.innerHTML = [...records].reverse().map((r, ri) => {
+      const idx = records.length - 1 - ri;
+      const rate = (r.profit / r.invest * 100).toFixed(2);
+      const isPos = r.profit >= 0;
+      return `<div class="record-item">
+        <button class="delete-btn" onclick="deleteRecord(${idx})">✕</button>
+        <div class="record-top">
+          <div class="record-coin">${r.coin}</div>
+          <div class="record-date">${r.date}${r.memo ? ' · ' + r.memo : ''}</div>
+        </div>
+        <div class="record-grid">
+          <div class="record-cell"><div class="rc-label">투자금</div><div class="rc-val">${fmt(r.invest)}원</div></div>
+          <div class="record-cell"><div class="rc-label">수익금</div><div class="rc-val ${isPos?'pos':'neg'}">${isPos?'+':''}${fmt(r.profit)}원</div></div>
+          <div class="record-cell"><div class="rc-label">수익률</div><div class="rc-val ${isPos?'pos':'neg'}">${isPos?'+':''}${rate}%</div></div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function addRecord() {
+    const coin = document.getElementById('coinName').value.trim();
+    const invest = parseFloat(document.getElementById('invest').value);
+    const profit = parseFloat(document.getElementById('recProfit').value);
+    const memo = document.getElementById('memo').value.trim();
+    const errEl = document.getElementById('errMsg');
+    if (!coin || isNaN(invest) || isNaN(profit) || invest <= 0) { errEl.style.display = 'block'; return; }
+    errEl.style.display = 'none';
+    const records = loadRecords();
+    const now = new Date();
+    records.push({ coin, invest, profit, memo, date: `${now.getMonth()+1}/${now.getDate()}` });
+    saveRecords(records);
+    ['coinName','invest','recProfit','memo'].forEach(id => document.getElementById(id).value = '');
+    renderRecords();
+  }
+
+  function deleteRecord(idx) {
+    if (!confirm('이 기록을 삭제할까요?')) return;
+    const records = loadRecords();
+    records.splice(idx, 1);
+    saveRecords(records);
+    renderRecords();
+  }
+
+  renderSeed();
+  renderRecords();
 </script>
 </body>
 </html>

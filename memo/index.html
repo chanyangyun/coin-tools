@@ -1,1 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>추천 코인 기록장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0a;
+    --surface: #171717;
+    --surface-soft: rgba(23,23,23,0.4);
+    --border: #262626;
+    --border-soft: #1f1f1f;
+    --text: #f5f5f5;
+    --text-dim: #a3a3a3;
+    --text-faint: #525252;
+    --text-ghost: #404040;
+    --accent: #fbbf24;
+    --accent-soft: rgba(251,191,36,0.1);
+    --emerald: #34d399;
+    --sky: #38bdf8;
+    --rose: #fb7185;
+    --red: #ef4444;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans KR', 'IBM Plex Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .noise {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .container {
+    position: relative; z-index: 1;
+    max-width: 1024px; margin: 0 auto;
+    padding: 32px 20px;
+  }
+  @media (min-width: 768px) {
+    .container { padding: 48px 32px; }
+  }
+
+  /* Header */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+  .header-tag {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: rgba(251,191,36,0.7);
+  }
+  .pulse-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .header h1 {
+    font-family: 'Playfair Display', 'Noto Serif KR', serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  @media (min-width: 768px) {
+    .header h1 { font-size: 3rem; }
+  }
+  .header h1 em {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .header p {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-top: 12px;
+  }
+
+  /* Input section */
+  .input-wrap {
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .input-glow {
+    position: absolute; inset: -2px;
+    background: linear-gradient(90deg, rgba(251,191,36,0.2), rgba(251,191,36,0.2));
+    border-radius: 10px;
+    filter: blur(8px);
+    opacity: 0.3;
+    transition: opacity 0.3s;
+  }
+  .input-wrap:focus-within .input-glow { opacity: 1; }
+  .input-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .input-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(23,23,23,0.5);
+  }
+  .traffic-lights { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-r { background: rgba(239,68,68,0.6); }
+  .dot-y { background: rgba(251,191,36,0.6); }
+  .dot-g { background: rgba(52,211,153,0.6); }
+  .filename {
+    margin-left: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+  .char-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-ghost);
+  }
+  textarea {
+    width: 100%;
+    min-height: 160px;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: vertical;
+  }
+  textarea:focus { outline: none; }
+  textarea::placeholder { color: var(--text-ghost); }
+  .input-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    background: rgba(23,23,23,0.3);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .detected {
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .detected .mono { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent);
+    color: #0a0a0a;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn:hover { background: #fcd34d; }
+  .btn:disabled {
+    background: #262626;
+    color: var(--text-ghost);
+    cursor: not-allowed;
+  }
+
+  /* Preview */
+  .preview {
+    margin-top: 12px;
+    background: rgba(23,23,23,0.4);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .preview-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: rgba(251,191,36,0.7);
+    margin-bottom: 12px;
+  }
+  .preview-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 12px;
+    padding: 3px 0;
+  }
+  .preview-date {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    min-width: 92px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .preview-sep { color: var(--text-faint); flex-shrink: 0; padding-top: 2px; }
+  .preview-count {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-faint);
+    flex-shrink: 0;
+    min-width: 36px;
+    padding-top: 2px;
+  }
+  .preview-coins {
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Compare section */
+  .compare-banner {
+    margin-bottom: 32px;
+    background: var(--surface);
+    border: 1px solid rgba(251,191,36,0.3);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .compare-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .compare-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .close-btn {
+    background: none; border: none; color: var(--text-faint);
+    cursor: pointer; padding: 4px;
+    transition: color 0.15s;
+  }
+  .close-btn:hover { color: var(--text); }
+  .compare-dates {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  @media (min-width: 768px) {
+    .compare-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .compare-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px;
+  }
+  .compare-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+  .compare-card-label.emerald { color: var(--emerald); }
+  .compare-card-label.sky { color: var(--sky); }
+  .compare-card-label.rose { color: var(--rose); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+  .tag.emerald {
+    background: rgba(52,211,153,0.1);
+    color: #6ee7b7;
+    border-color: rgba(52,211,153,0.2);
+  }
+  .tag.sky {
+    background: rgba(56,189,248,0.1);
+    color: #7dd3fc;
+    border-color: rgba(56,189,248,0.2);
+  }
+  .tag.rose {
+    background: rgba(251,113,133,0.1);
+    color: #fda4af;
+    border-color: rgba(251,113,133,0.2);
+  }
+  .empty { font-size: 11px; color: var(--text-ghost); }
+
+  /* Entries */
+  .entries-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .entries-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .entries-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-left: 4px;
+  }
+  .hint {
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .empty-state {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 64px 20px;
+    text-align: center;
+  }
+  .empty-state p { color: var(--text-faint); font-size: 13px; }
+  .empty-state p.sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-ghost);
+    margin-top: 8px;
+  }
+  .entry {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+  .entry:hover { border-color: #333; }
+  .entry.active {
+    border-color: rgba(251,191,36,0.6);
+    box-shadow: 0 10px 30px -10px rgba(251,191,36,0.1);
+  }
+  .entry-content { padding: 20px; }
+  .entry-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .entry-date {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .badge.a { background: var(--accent); color: #0a0a0a; }
+  .badge.b { background: var(--sky); color: #0a0a0a; }
+  .entry-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+  .entry-actions {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .action-btn {
+    font-size: 12px;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .action-btn:hover { border-color: rgba(251,191,36,0.4); color: var(--accent); }
+  .action-btn.active-a { border-color: rgba(251,191,36,0.4); color: var(--accent); }
+  .action-btn.to-sky:hover { border-color: rgba(56,189,248,0.4); color: var(--sky); }
+  .delete-btn {
+    background: none; border: none; color: var(--text-ghost);
+    padding: 6px; border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .delete-btn:hover { color: var(--rose); }
+  .coin-tag {
+    font-size: 12px;
+    background: rgba(38,38,38,0.6);
+    color: #e5e5e5;
+    border: 1px solid rgba(64,64,64,0.5);
+    padding: 4px 10px;
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+  .coin-tag:hover { border-color: rgba(251,191,36,0.4); color: #fcd34d; }
+
+  /* Streak section */
+  .streak-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .streak-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .window-selector {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px;
+  }
+  .window-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .window-btn:hover { color: var(--text); }
+  .window-btn.active {
+    background: var(--accent);
+    color: #0a0a0a;
+    font-weight: 600;
+  }
+  .streak-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .streak-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+    letter-spacing: 0.1em;
+  }
+  .streak-group {
+    margin-bottom: 18px;
+  }
+  .streak-group:last-child { margin-bottom: 0; }
+  .streak-group-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .streak-group-label .count-badge {
+    background: rgba(38,38,38,0.6);
+    color: var(--text-dim);
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+  .streak-label-hot { color: #f97316; }
+  .streak-label-warm { color: var(--accent); }
+  .streak-label-mild { color: var(--sky); }
+  .streak-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .streak-tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .streak-tag.hot {
+    background: rgba(249,115,22,0.08);
+    color: #fdba74;
+    border-color: rgba(249,115,22,0.25);
+  }
+  .streak-tag.warm {
+    background: rgba(251,191,36,0.08);
+    color: #fcd34d;
+    border-color: rgba(251,191,36,0.25);
+  }
+  .streak-tag.mild {
+    background: rgba(56,189,248,0.08);
+    color: #7dd3fc;
+    border-color: rgba(56,189,248,0.25);
+  }
+  .streak-tag .freq {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    opacity: 0.7;
+  }
+  .streak-empty {
+    font-size: 12px;
+    color: var(--text-ghost);
+    text-align: center;
+    padding: 16px 0;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  footer p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--text-ghost);
+  }
+
+  /* Utility */
+  .hidden { display: none !important; }
+  .section { margin-bottom: 40px; }
+
+  /* Icon */
+  .icon {
+    width: 18px; height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon-sm { width: 14px; height: 14px; }
+  .icon-xs { width: 12px; height: 12px; }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<div class="container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-tag">
+      <div class="pulse-dot"></div>
+      <span>CRYPTO · DAILY · LEDGER</span>
+    </div>
+    <h1>추천 코인 <em>기록장</em></h1>
+    <p>텍스트를 붙여넣으면 날짜를 자동 인식하고 · 가나다순 정렬 · 날짜별 비교</p>
+  </header>
+
+  <!-- Input -->
+  <section class="section">
+    <div class="input-wrap">
+      <div class="input-glow"></div>
+      <div class="input-card">
+        <div class="input-header">
+          <div class="traffic-lights">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span class="filename">paste.clipboard</span>
+          </div>
+          <span class="char-count" id="charCount">0 chars</span>
+        </div>
+        <textarea id="inputArea" placeholder="예시:&#10;4월 21일&#10;비트코인, 이더리움 리플&#10;솔라나 에이다&#10;&#10;4월 20일&#10;도지, 체인링크&#10;&#10;여러 날짜 한번에 붙여넣어도 OK"></textarea>
+        <div class="input-footer">
+          <div class="detected" id="detectedInfo"></div>
+          <button id="saveBtn" class="btn" disabled>
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            저장
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="previewArea"></div>
+  </section>
+
+  <!-- Compare -->
+  <section id="compareSection" class="section hidden">
+    <div class="compare-banner">
+      <div class="compare-header">
+        <div class="compare-title">
+          <svg class="icon" viewBox="0 0 24 24" style="color: var(--accent);"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          <span>날짜별 비교</span>
+        </div>
+        <button id="closeCompare" class="close-btn">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="compare-dates">
+        <span id="compareDateA"></span>
+        <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--text-faint);"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <span id="compareDateB"></span>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-card">
+          <div class="compare-card-label emerald" id="commonLabel">공통 · 0</div>
+          <div class="tags" id="commonTags"></div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-card-label sky" id="onlyALabel">A만 · 0</div>
+          <div class="tags" id="onlyATags"></div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-card-label rose" id="onlyBLabel">B만 · 0</div>
+          <div class="tags" id="onlyBTags"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Streak (연속 추천) -->
+  <section id="streakSection" class="section hidden">
+    <div class="streak-header">
+      <div class="streak-title">
+        <svg class="icon" viewBox="0 0 24 24" style="color: var(--accent);"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span>연속 추천 코인</span>
+      </div>
+      <div class="window-selector" id="windowSelector">
+        <button class="window-btn" data-window="3">최근 3일</button>
+        <button class="window-btn active" data-window="4">최근 4일</button>
+        <button class="window-btn" data-window="7">최근 7일</button>
+        <button class="window-btn" data-window="0">전체</button>
+      </div>
+    </div>
+    <div class="streak-card">
+      <div class="streak-meta" id="streakMeta"></div>
+      <div id="streakContent"></div>
+    </div>
+  </section>
+
+  <!-- Entries -->
+  <section>
+    <div class="entries-header">
+      <div class="entries-title">
+        <svg class="icon" viewBox="0 0 24 24" style="color: var(--accent);"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>저장된 기록</span>
+        <span class="entries-count" id="entriesCount">(0)</span>
+      </div>
+      <div class="hint" id="compareHint"></div>
+    </div>
+    <div id="entriesList"></div>
+  </section>
+
+  <footer>
+    <p>DATA · PERSISTED · LOCALLY</p>
+  </footer>
+</div>
+
+<script>
+// ========= STATE =========
+const STORAGE_KEY = 'crypto_recommendations_v1';
+const WINDOW_KEY = 'crypto_streak_window_v1';
+let entries = {};
+let selectedDate = null;
+let compareDate = null;
+let streakWindow = 4; // 기본 4일
+
+// ========= STORAGE =========
+function loadEntries() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) entries = JSON.parse(raw);
+  } catch (e) {
+    console.error('불러오기 실패:', e);
+    entries = {};
+  }
+}
+function saveEntries() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+  } catch (e) {
+    console.error('저장 실패:', e);
+    alert('저장에 실패했습니다. 브라우저 저장 공간을 확인해주세요.');
+  }
+}
+
+// ========= PARSING =========
+function normalizeDate(y, m, d) {
+  return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+}
+
+function findDateMarkers(text) {
+  const markers = [];
+  const currentYear = new Date().getFullYear();
+  const occupied = [];
+
+  const patterns = [
+    { regex: /(\d{4})[-./](\d{1,2})[-./](\d{1,2})/g, extract: (m) => ({ y: m[1], mo: m[2], d: m[3] }) },
+    { regex: /(\d{1,2})\s*월\s*(\d{1,2})\s*일/g, extract: (m) => ({ y: currentYear, mo: m[1], d: m[2] }) },
+    { regex: /(?:^|\n|\s)(\d{1,2})[-./](\d{1,2})(?=\s|$|\n)/g, extract: (m) => ({ y: currentYear, mo: m[1], d: m[2] }) },
+  ];
+
+  for (const { regex, extract } of patterns) {
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
+      let overlap = false;
+      for (const [s, e] of occupied) {
+        if (!(end <= s || start >= e)) { overlap = true; break; }
+      }
+      if (overlap) continue;
+
+      const { y, mo, d } = extract(match);
+      const monthNum = parseInt(mo, 10);
+      const dayNum = parseInt(d, 10);
+      if (monthNum < 1 || monthNum > 12 || dayNum < 1 || dayNum > 31) continue;
+
+      occupied.push([start, end]);
+      markers.push({ start, end, date: normalizeDate(y, mo, d) });
+    }
+  }
+  return markers.sort((a, b) => a.start - b.start);
+}
+
+function tokenizeCoins(text) {
+  const cleaned = text.replace(/\([^)]*\)/g, '').replace(/\[[^\]]*\]/g, '');
+  const tokens = cleaned
+    .split(/[\n,\s/\t;·•・|.]+/)
+    .map((t) => t.trim())
+    .filter((t) => t.length > 0)
+    .filter((t) => !/^\d+$/.test(t))
+    .filter((t) => /[가-힣a-zA-Z]/.test(t))
+    .filter((t) => !['추천', '종목', '코인', '오늘', '내일', '어제', '원'].includes(t));
+  return [...new Set(tokens)].sort((a, b) => a.localeCompare(b, 'ko'));
+}
+
+function parseBlocks(text) {
+  if (!text.trim()) return [];
+  const markers = findDateMarkers(text);
+
+  if (markers.length === 0) {
+    const coins = tokenizeCoins(text);
+    if (coins.length === 0) return [];
+    const today = new Date();
+    return [{ date: normalizeDate(today.getFullYear(), today.getMonth() + 1, today.getDate()), coins }];
+  }
+
+  const blocks = [];
+  if (markers[0].start > 0) {
+    const prefix = text.slice(0, markers[0].start);
+    const prefixCoins = tokenizeCoins(prefix);
+    if (prefixCoins.length > 0) {
+      const today = new Date();
+      blocks.push({ date: normalizeDate(today.getFullYear(), today.getMonth() + 1, today.getDate()), coins: prefixCoins });
+    }
+  }
+
+  for (let i = 0; i < markers.length; i++) {
+    const m = markers[i];
+    const next = markers[i + 1];
+    const segment = text.slice(m.end, next ? next.start : text.length);
+    const coins = tokenizeCoins(segment);
+    if (coins.length > 0) blocks.push({ date: m.date, coins });
+  }
+
+  const merged = {};
+  for (const b of blocks) {
+    if (!merged[b.date]) merged[b.date] = new Set(b.coins);
+    else b.coins.forEach((c) => merged[b.date].add(c));
+  }
+  return Object.entries(merged).map(([date, set]) => ({
+    date,
+    coins: [...set].sort((a, b) => a.localeCompare(b, 'ko')),
+  }));
+}
+
+// ========= RENDER =========
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+function renderPreview() {
+  const text = document.getElementById('inputArea').value;
+  const blocks = parseBlocks(text);
+  const previewEl = document.getElementById('previewArea');
+  const btn = document.getElementById('saveBtn');
+  const detected = document.getElementById('detectedInfo');
+  const charCount = document.getElementById('charCount');
+
+  charCount.textContent = `${text.length} chars`;
+
+  if (blocks.length === 0) {
+    previewEl.innerHTML = '';
+    btn.disabled = true;
+    detected.innerHTML = '';
+    return;
+  }
+
+  btn.disabled = false;
+  const totalCoins = blocks.reduce((s, b) => s + b.coins.length, 0);
+  detected.innerHTML = `감지 <span class="mono">${blocks.length}</span>일 · 총 <span class="mono">${totalCoins}</span>개 종목`;
+
+  const rows = blocks.map((b) => `
+    <div class="preview-row">
+      <span class="preview-date">${b.date}</span>
+      <span class="preview-sep">·</span>
+      <span class="preview-count">${b.coins.length}개</span>
+      <span class="preview-coins">${escapeHtml(b.coins.join(', '))}</span>
+    </div>
+  `).join('');
+
+  previewEl.innerHTML = `
+    <div class="preview">
+      <div class="preview-label">PREVIEW · 저장 전 미리보기</div>
+      <div>${rows}</div>
+    </div>
+  `;
+}
+
+function renderCompare() {
+  const section = document.getElementById('compareSection');
+  if (!selectedDate || !compareDate) {
+    section.classList.add('hidden');
+    return;
+  }
+  section.classList.remove('hidden');
+  const a = new Set(entries[selectedDate].coins);
+  const b = new Set(entries[compareDate].coins);
+  const common = [...a].filter(x => b.has(x)).sort((a,b)=>a.localeCompare(b,'ko'));
+  const onlyA = [...a].filter(x => !b.has(x)).sort((a,b)=>a.localeCompare(b,'ko'));
+  const onlyB = [...b].filter(x => !a.has(x)).sort((a,b)=>a.localeCompare(b,'ko'));
+
+  document.getElementById('compareDateA').textContent = selectedDate;
+  document.getElementById('compareDateB').textContent = compareDate;
+  document.getElementById('commonLabel').textContent = `공통 · ${common.length}`;
+  document.getElementById('onlyALabel').textContent = `${selectedDate}만 · ${onlyA.length}`;
+  document.getElementById('onlyBLabel').textContent = `${compareDate}만 · ${onlyB.length}`;
+
+  const render = (arr, cls) => arr.length > 0
+    ? arr.map(c => `<span class="tag ${cls}">${escapeHtml(c)}</span>`).join('')
+    : '<span class="empty">없음</span>';
+
+  document.getElementById('commonTags').innerHTML = render(common, 'emerald');
+  document.getElementById('onlyATags').innerHTML = render(onlyA, 'sky');
+  document.getElementById('onlyBTags').innerHTML = render(onlyB, 'rose');
+}
+
+function renderEntries() {
+  const list = document.getElementById('entriesList');
+  const countEl = document.getElementById('entriesCount');
+  const hintEl = document.getElementById('compareHint');
+  const dates = Object.keys(entries).sort((a, b) => b.localeCompare(a));
+
+  countEl.textContent = `(${dates.length})`;
+
+  if (dates.length >= 2 && !compareDate) {
+    hintEl.textContent = selectedDate ? '비교할 다른 날짜 선택 →' : '카드 선택 → 비교할 다른 날짜 선택';
+  } else {
+    hintEl.textContent = '';
+  }
+
+  if (dates.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <p>아직 기록이 없어요</p>
+        <p class="sub">위에 붙여넣고 저장 버튼을 눌러보세요</p>
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = dates.map((date) => {
+    const entry = entries[date];
+    const isA = selectedDate === date;
+    const isB = compareDate === date;
+    const activeClass = (isA || isB) ? ' active' : '';
+
+    let actionBtn = '';
+    if (!selectedDate) {
+      actionBtn = `<button class="action-btn" onclick="startCompare('${date}')">비교 시작</button>`;
+    } else if (selectedDate === date) {
+      actionBtn = `<button class="action-btn active-a" onclick="cancelCompare()">취소</button>`;
+    } else if (!compareDate) {
+      actionBtn = `<button class="action-btn to-sky" onclick="setCompareB('${date}')">여기와 비교</button>`;
+    }
+
+    const coinsHtml = entry.coins.map(c => `<span class="coin-tag">${escapeHtml(c)}</span>`).join('');
+    const badges = (isA ? '<span class="badge a">A</span>' : '') + (isB ? '<span class="badge b">B</span>' : '');
+
+    return `
+      <div class="entry${activeClass}">
+        <div class="entry-content">
+          <div class="entry-header">
+            <div>
+              <div class="entry-date">
+                <span>${date}</span>
+                ${badges}
+              </div>
+              <div class="entry-count">${entry.coins.length}개 종목</div>
+            </div>
+            <div class="entry-actions">
+              ${actionBtn}
+              <button class="delete-btn" onclick="deleteEntry('${date}')" title="삭제">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 01-2 2H9a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="tags">${coinsHtml}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function computeStreaks() {
+  // 날짜 최신순 정렬
+  const allDates = Object.keys(entries).sort((a, b) => b.localeCompare(a));
+  if (allDates.length === 0) return null;
+
+  // 윈도우 적용 (0이면 전체)
+  const windowDates = streakWindow > 0 ? allDates.slice(0, streakWindow) : allDates;
+  const totalDays = windowDates.length;
+
+  // 각 코인이 몇 번 등장했는지 집계
+  const coinCount = {};
+  for (const date of windowDates) {
+    for (const coin of entries[date].coins) {
+      if (!coinCount[coin]) coinCount[coin] = { count: 0, dates: [] };
+      coinCount[coin].count++;
+      coinCount[coin].dates.push(date);
+    }
+  }
+
+  // 2번 이상 등장한 것만 필터링
+  const repeated = Object.entries(coinCount)
+    .filter(([_, info]) => info.count >= 2)
+    .map(([coin, info]) => ({ coin, count: info.count, dates: info.dates }));
+
+  // 등장 횟수별로 그룹화 (높은 순)
+  const groups = {};
+  for (const item of repeated) {
+    if (!groups[item.count]) groups[item.count] = [];
+    groups[item.count].push(item);
+  }
+
+  // 각 그룹 내에서 가나다순 정렬
+  Object.values(groups).forEach(arr => {
+    arr.sort((a, b) => a.coin.localeCompare(b.coin, 'ko'));
+  });
+
+  return { groups, totalDays, windowDates };
+}
+
+function renderStreak() {
+  const section = document.getElementById('streakSection');
+  const totalEntries = Object.keys(entries).length;
+
+  // 기록이 2개 미만이면 숨김
+  if (totalEntries < 2) {
+    section.classList.add('hidden');
+    return;
+  }
+  section.classList.remove('hidden');
+
+  const result = computeStreaks();
+  if (!result) return;
+
+  const { groups, totalDays, windowDates } = result;
+  const metaEl = document.getElementById('streakMeta');
+  const contentEl = document.getElementById('streakContent');
+
+  // 메타 정보
+  const fromDate = windowDates[windowDates.length - 1];
+  const toDate = windowDates[0];
+  metaEl.textContent = `WINDOW: ${fromDate} → ${toDate} · ${totalDays}일 분석`;
+
+  // 등장 횟수 내림차순
+  const countLevels = Object.keys(groups).map(Number).sort((a, b) => b - a);
+
+  if (countLevels.length === 0) {
+    contentEl.innerHTML = '<div class="streak-empty">2회 이상 연속 추천된 코인이 없어요</div>';
+    return;
+  }
+
+  // 색상 결정: 최고 레벨은 hot, 그 다음은 warm, 나머지는 mild
+  const html = countLevels.map((count, idx) => {
+    let cls, labelCls;
+    if (idx === 0) { cls = 'hot'; labelCls = 'streak-label-hot'; }
+    else if (idx === 1) { cls = 'warm'; labelCls = 'streak-label-warm'; }
+    else { cls = 'mild'; labelCls = 'streak-label-mild'; }
+
+    const items = groups[count];
+    const tags = items.map(item =>
+      `<span class="streak-tag ${cls}">${escapeHtml(item.coin)}<span class="freq">${item.count}회</span></span>`
+    ).join('');
+
+    return `
+      <div class="streak-group">
+        <div class="streak-group-label ${labelCls}">
+          <span>${count}일 / ${totalDays}일 등장</span>
+          <span class="count-badge">${items.length}종목</span>
+        </div>
+        <div class="streak-tags">${tags}</div>
+      </div>
+    `;
+  }).join('');
+
+  contentEl.innerHTML = html;
+}
+
+function renderAll() {
+  renderEntries();
+  renderCompare();
+  renderStreak();
+}
+
+// ========= ACTIONS =========
+window.startCompare = (date) => { selectedDate = date; renderAll(); };
+window.cancelCompare = () => { selectedDate = null; compareDate = null; renderAll(); };
+window.setCompareB = (date) => { compareDate = date; renderAll(); };
+window.deleteEntry = (date) => {
+  if (!confirm(`${date} 기록을 삭제할까요?`)) return;
+  delete entries[date];
+  if (selectedDate === date) selectedDate = null;
+  if (compareDate === date) compareDate = null;
+  saveEntries();
+  renderAll();
+};
+
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const text = document.getElementById('inputArea').value;
+  const blocks = parseBlocks(text);
+  if (blocks.length === 0) return;
+
+  for (const block of blocks) {
+    if (entries[block.date]) {
+      const existing = new Set(entries[block.date].coins);
+      block.coins.forEach(c => existing.add(c));
+      entries[block.date] = {
+        coins: [...existing].sort((a, b) => a.localeCompare(b, 'ko')),
+        savedAt: new Date().toISOString(),
+      };
+    } else {
+      entries[block.date] = { coins: block.coins, savedAt: new Date().toISOString() };
+    }
+  }
+  saveEntries();
+  document.getElementById('inputArea').value = '';
+  renderPreview();
+  renderAll();
+});
+
+document.getElementById('inputArea').addEventListener('input', renderPreview);
+document.getElementById('closeCompare').addEventListener('click', () => {
+  selectedDate = null;
+  compareDate = null;
+  renderAll();
+});
+
+// 윈도우 선택 버튼
+document.querySelectorAll('.window-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const newWindow = parseInt(btn.dataset.window, 10);
+    streakWindow = newWindow;
+    try { localStorage.setItem(WINDOW_KEY, String(newWindow)); } catch(e) {}
+    document.querySelectorAll('.window-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderStreak();
+  });
+});
+
+// 저장된 윈도우 설정 불러오기
+try {
+  const savedWindow = localStorage.getItem(WINDOW_KEY);
+  if (savedWindow !== null) {
+    streakWindow = parseInt(savedWindow, 10);
+    document.querySelectorAll('.window-btn').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.window, 10) === streakWindow);
+    });
+  }
+} catch(e) {}
+
+// ========= INIT =========
+loadEntries();
+renderPreview();
+renderAll();
+</script>
+</body>
+</html>
 

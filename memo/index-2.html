@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>추천 코인 메모장</title>
+
+<!-- Favicon (SVG - 모든 크기 대응, 선명함) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8IS0tIOuwsOqyvSDqt7jrnbzrlJTslrjtirggLS0+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYTFhMWE7c3RvcC1vcGFjaXR5OjEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMGEwYTBhO3N0b3Atb3BhY2l0eToxIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJhbWJlckdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZmNkMzRkO3N0b3Atb3BhY2l0eToxIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2Y1OWUwYjtzdG9wLW9wYWNpdHk6MSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZW1iZXJHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2ZiYmYyNDtzdG9wLW9wYWNpdHk6MSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNlYTU4MGM7c3RvcC1vcGFjaXR5OjEiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3ciIGN4PSI1MCUiIGN5PSI0MCUiIHI9IjYwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmYmJmMjQ7c3RvcC1vcGFjaXR5OjAuMTUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZmJiZjI0O3N0b3Atb3BhY2l0eTowIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogICAgPGZpbHRlciBpZD0ic29mdFNoYWRvdyIgeD0iLTUwJSIgeT0iLTUwJSIgd2lkdGg9IjIwMCUiIGhlaWdodD0iMjAwJSI+CiAgICAgIDxmZUdhdXNzaWFuQmx1ciBpbj0iU291cmNlQWxwaGEiIHN0ZERldmlhdGlvbj0iNiIvPgogICAgICA8ZmVPZmZzZXQgZHg9IjAiIGR5PSI0IiByZXN1bHQ9Im9mZnNldGJsdXIiLz4KICAgICAgPGZlRmxvb2QgZmxvb2QtY29sb3I9IiMwMDAwMDAiIGZsb29kLW9wYWNpdHk9IjAuNCIvPgogICAgICA8ZmVDb21wb3NpdGUgaW4yPSJvZmZzZXRibHVyIiBvcGVyYXRvcj0iaW4iLz4KICAgICAgPGZlTWVyZ2U+CiAgICAgICAgPGZlTWVyZ2VOb2RlLz4KICAgICAgICA8ZmVNZXJnZU5vZGUgaW49IlNvdXJjZUdyYXBoaWMiLz4KICAgICAgPC9mZU1lcmdlPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8IS0tIOudvOyatOuTnCDsgqzqsIHtmJUg67Cw6rK9IChpT1Mg7Iqk7YOA7J28KSAtLT4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgcnk9IjExMiIgZmlsbD0idXJsKCNiZ0dyYWQpIi8+CiAgCiAgPCEtLSDquIDroZzsmrAg7Jik67KE66CI7J20IC0tPgogIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTEyIiByeT0iMTEyIiBmaWxsPSJ1cmwoI2dsb3cpIi8+CiAgCiAgPCEtLSDrr7jshLjtlZwg64W47J207KaIIO2aqOqzvOulvCDsnITtlZwg7KCQ65OkIC0tPgogIDxnIG9wYWNpdHk9IjAuMDQiIGZpbGw9IiNmZmZmZmYiPgogICAgPGNpcmNsZSBjeD0iODAiIGN5PSIxMjAiIHI9IjEiLz4KICAgIDxjaXJjbGUgY3g9IjE4MCIgY3k9IjgwIiByPSIxIi8+CiAgICA8Y2lyY2xlIGN4PSIzNTAiIGN5PSIxNTAiIHI9IjEiLz4KICAgIDxjaXJjbGUgY3g9IjQzMCIgY3k9IjI4MCIgcj0iMSIvPgogICAgPGNpcmNsZSBjeD0iMTIwIiBjeT0iMzgwIiByPSIxIi8+CiAgICA8Y2lyY2xlIGN4PSIyODAiIGN5PSI0NTAiIHI9IjEiLz4KICAgIDxjaXJjbGUgY3g9IjYwIiBjeT0iMjQwIiByPSIxIi8+CiAgICA8Y2lyY2xlIGN4PSI0MDAiIGN5PSI0MDAiIHI9IjEiLz4KICA8L2c+CgogIDwhLS0g66mU7J24IOyVhOydtOy9mDog64W47Yq467aBL+yepeu2gCDtmJXtg5wgLS0+CiAgPGcgZmlsdGVyPSJ1cmwoI3NvZnRTaGFkb3cpIj4KICAgIDwhLS0g7LGFIOuzuOyytCAo7Ja065GQ7Jq0IOuyoOydtOyKpCkgLS0+CiAgICA8cmVjdCB4PSIxMjAiIHk9IjEyMCIgd2lkdGg9IjI3MiIgaGVpZ2h0PSIyODAiIHJ4PSIxNiIgcnk9IjE2IiAKICAgICAgICAgIGZpbGw9IiMxNzE3MTciIHN0cm9rZT0iIzI2MjYyNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgICAKICAgIDwhLS0g7KKM7LihIOuwlOyduOuNlCDrnbzsnbggLS0+CiAgICA8bGluZSB4MT0iMTYwIiB5MT0iMTQwIiB4Mj0iMTYwIiB5Mj0iMzgwIiAKICAgICAgICAgIHN0cm9rZT0idXJsKCNhbWJlckdyYWQpIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNCIvPgogICAgCiAgICA8IS0tIOuwlOyduOuNlCDqtazrqY3rk6QgLS0+CiAgICA8Y2lyY2xlIGN4PSIxNjAiIGN5PSIxNzAiIHI9IjQiIGZpbGw9IiMwYTBhMGEiIHN0cm9rZT0iI2ZiYmYyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuNiIvPgogICAgPGNpcmNsZSBjeD0iMTYwIiBjeT0iMjIwIiByPSI0IiBmaWxsPSIjMGEwYTBhIiBzdHJva2U9IiNmYmJmMjQiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIwLjYiLz4KICAgIDxjaXJjbGUgY3g9IjE2MCIgY3k9IjI3MCIgcj0iNCIgZmlsbD0iIzBhMGEwYSIgc3Ryb2tlPSIjZmJiZjI0IiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iMC42Ii8+CiAgICA8Y2lyY2xlIGN4PSIxNjAiIGN5PSIzMjAiIHI9IjQiIGZpbGw9IiMwYTBhMGEiIHN0cm9rZT0iI2ZiYmYyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuNiIvPgogICAgPGNpcmNsZSBjeD0iMTYwIiBjeT0iMzcwIiByPSI0IiBmaWxsPSIjMGEwYTBhIiBzdHJva2U9IiNmYmJmMjQiIHN0cm9rZS13aWR0aD0iMS41IiBvcGFjaXR5PSIwLjYiLz4KICA8L2c+CgogIDwhLS0g7YWN7Iqk7Yq4IOudvOyduOuTpCAo7J6l67aAIOuKkOuCjCkgLS0+CiAgPGc+CiAgICA8IS0tIOyyqyDrsojsp7gg7KSEOiDrgqDsp5wgKOqwleyhsCkgLS0+CiAgICA8cmVjdCB4PSIxOTAiIHk9IjE2MCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjYiIHJ4PSIzIiBmaWxsPSJ1cmwoI2FtYmVyR3JhZCkiLz4KICAgIAogICAgPCEtLSDsvZTsnbgg7YOc6re465OkICjssqvrsojsp7gg6re466O5KSAtLT4KICAgIDxyZWN0IHg9IjE5MCIgeT0iMTg1IiB3aWR0aD0iNDAiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjZmJiZjI0IiBvcGFjaXR5PSIwLjI1IiBzdHJva2U9IiNmYmJmMjQiIHN0cm9rZS13aWR0aD0iMC44IiBzdHJva2Utb3BhY2l0eT0iMC41Ii8+CiAgICA8cmVjdCB4PSIyMzgiIHk9IjE4NSIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjE0IiByeD0iMyIgZmlsbD0iI2ZiYmYyNCIgb3BhY2l0eT0iMC4yNSIgc3Ryb2tlPSIjZmJiZjI0IiBzdHJva2Utd2lkdGg9IjAuOCIgc3Ryb2tlLW9wYWNpdHk9IjAuNSIvPgogICAgPHJlY3QgeD0iMjk0IiB5PSIxODUiIHdpZHRoPSIzNiIgaGVpZ2h0PSIxNCIgcng9IjMiIGZpbGw9IiNmYmJmMjQiIG9wYWNpdHk9IjAuMjUiIHN0cm9rZT0iI2ZiYmYyNCIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjUiLz4KICAgIDxyZWN0IHg9IjMzOCIgeT0iMTg1IiB3aWR0aD0iNDQiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjZmJiZjI0IiBvcGFjaXR5PSIwLjI1IiBzdHJva2U9IiNmYmJmMjQiIHN0cm9rZS13aWR0aD0iMC44IiBzdHJva2Utb3BhY2l0eT0iMC41Ii8+CiAgICAKICAgIDwhLS0g65GQIOuyiOynuCDspIQ6IOuCoOynnCAtLT4KICAgIDxyZWN0IHg9IjE5MCIgeT0iMjIwIiB3aWR0aD0iODAiIGhlaWdodD0iNiIgcng9IjMiIGZpbGw9InVybCgjYW1iZXJHcmFkKSIgb3BhY2l0eT0iMC43Ii8+CiAgICAKICAgIDwhLS0g7L2U7J24IO2DnOq3uOuTpCAo65GQ67KI7Ke4IOq3uOujuSkgLS0+CiAgICA8cmVjdCB4PSIxOTAiIHk9IjI0NSIgd2lkdGg9IjQ0IiBoZWlnaHQ9IjE0IiByeD0iMyIgZmlsbD0iI2ZiYmYyNCIgb3BhY2l0eT0iMC4xOCIgc3Ryb2tlPSIjZmJiZjI0IiBzdHJva2Utd2lkdGg9IjAuOCIgc3Ryb2tlLW9wYWNpdHk9IjAuNCIvPgogICAgPHJlY3QgeD0iMjQyIiB5PSIyNDUiIHdpZHRoPSIzOCIgaGVpZ2h0PSIxNCIgcng9IjMiIGZpbGw9IiNmYmJmMjQiIG9wYWNpdHk9IjAuMTgiIHN0cm9rZT0iI2ZiYmYyNCIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjQiLz4KICAgIDxyZWN0IHg9IjI4OCIgeT0iMjQ1IiB3aWR0aD0iNTAiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjZmJiZjI0IiBvcGFjaXR5PSIwLjE4IiBzdHJva2U9IiNmYmJmMjQiIHN0cm9rZS13aWR0aD0iMC44IiBzdHJva2Utb3BhY2l0eT0iMC40Ii8+CiAgICA8cmVjdCB4PSIzNDYiIHk9IjI0NSIgd2lkdGg9IjM2IiBoZWlnaHQ9IjE0IiByeD0iMyIgZmlsbD0iI2ZiYmYyNCIgb3BhY2l0eT0iMC4xOCIgc3Ryb2tlPSIjZmJiZjI0IiBzdHJva2Utd2lkdGg9IjAuOCIgc3Ryb2tlLW9wYWNpdHk9IjAuNCIvPgogICAgCiAgICA8IS0tIOyEuCDrsojsp7gg7KSEOiDrgqDsp5wgLS0+CiAgICA8cmVjdCB4PSIxOTAiIHk9IjI4MCIgd2lkdGg9IjgwIiBoZWlnaHQ9IjYiIHJ4PSIzIiBmaWxsPSJ1cmwoI2FtYmVyR3JhZCkiIG9wYWNpdHk9IjAuNSIvPgogICAgCiAgICA8IS0tIOy9lOyduCDtg5zqt7jrk6QgKOyEuOuyiOynuCDqt7jro7kpIC0tPgogICAgPHJlY3QgeD0iMTkwIiB5PSIzMDUiIHdpZHRoPSI0MiIgaGVpZ2h0PSIxNCIgcng9IjMiIGZpbGw9IiNmYmJmMjQiIG9wYWNpdHk9IjAuMTMiIHN0cm9rZT0iI2ZiYmYyNCIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjMiLz4KICAgIDxyZWN0IHg9IjI0MCIgeT0iMzA1IiB3aWR0aD0iNDYiIGhlaWdodD0iMTQiIHJ4PSIzIiBmaWxsPSIjZmJiZjI0IiBvcGFjaXR5PSIwLjEzIiBzdHJva2U9IiNmYmJmMjQiIHN0cm9rZS13aWR0aD0iMC44IiBzdHJva2Utb3BhY2l0eT0iMC4zIi8+CiAgICA8cmVjdCB4PSIyOTQiIHk9IjMwNSIgd2lkdGg9IjQwIiBoZWlnaHQ9IjE0IiByeD0iMyIgZmlsbD0iI2ZiYmYyNCIgb3BhY2l0eT0iMC4xMyIgc3Ryb2tlPSIjZmJiZjI0IiBzdHJva2Utd2lkdGg9IjAuOCIgc3Ryb2tlLW9wYWNpdHk9IjAuMyIvPgogICAgPHJlY3QgeD0iMzQyIiB5PSIzMDUiIHdpZHRoPSI0MCIgaGVpZ2h0PSIxNCIgcng9IjMiIGZpbGw9IiNmYmJmMjQiIG9wYWNpdHk9IjAuMTMiIHN0cm9rZT0iI2ZiYmYyNCIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1vcGFjaXR5PSIwLjMiLz4KICA8L2c+CgogIDwhLS0g7Jqw7LihIO2VmOuLqCDrsojqsJwg7JWE7J207L2YICjsl7Dsho0g7LaU7LKcIOyDgeynlSkgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzEwLCAzMzUpIj4KICAgIDxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjM2IiBmaWxsPSIjMGEwYTBhIiBzdHJva2U9InVybCgjZW1iZXJHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgICA8cGF0aCBkPSJNIDM1IDEyIEwgMTggMzggTCAzMCAzOCBMIDI3IDU2IEwgNDYgMjggTCAzMyAyOCBMIDM1IDEyIFoiIAogICAgICAgICAgZmlsbD0idXJsKCNlbWJlckdyYWQpIiBzdHJva2U9IiNmYmJmMjQiIHN0cm9rZS13aWR0aD0iMC41IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPC9nPgoKICA8IS0tIOyijOy4oSDsg4Hri6gg7Y6E7IqkIOygkCAo65287J2067iMIO2RnOyLnCkgLS0+CiAgPGNpcmNsZSBjeD0iMTM1IiBjeT0iMTM1IiByPSI1IiBmaWxsPSIjZmJiZjI0Ii8+CiAgPGNpcmNsZSBjeD0iMTM1IiBjeT0iMTM1IiByPSI5IiBmaWxsPSJub25lIiBzdHJva2U9IiNmYmJmMjQiIHN0cm9rZS13aWR0aD0iMSIgb3BhY2l0eT0iMC41Ii8+Cjwvc3ZnPgo=" />
+
+<!-- iOS 홈 화면 추가 시 사용되는 아이콘 (PNG 180x180) -->
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nO19e7AlR3nfr+ec+zj37t29u9q3drUrgUESCD14xIAFCAkQcRUGTHDMw0W5KDtUcDl2FVSZIsExRbAd4sqD2JSTchGIEUTYCSYYBJighEeBBEJvQBJarZaVtLvavXv3nvs8Z778MWfm9OP7unvmzLn37up8W+fuTE/31990//rrr79+jMLGUfPgwb3XqhRXIGlcDkqfA4VDCriIiKYBTAHYAgUogYFiHijrhoi0W38CKR+Ocr6cDIMQkSlzVBrxJg+iHm9y4nA5SdlTP8G8UmpeQZ1NQXMAHkwpvavbTe8hatx96tSpc6VeoEaquTr8dPDgnucD6nWJarya0vR6ADMEHXCudJyAEoiUdVGAzgPk6ALQZCkLuDLE8daAFE7vXPT5khPIRtXSCPx5NvlNh4BvpZR+cXy88XfHjp18OELs2mjogN69e/eeiYnG2xSp34DCNQCKkhLBLAHZiWil1Z4RkQvkMtpYkGG9wczGK/4E4uTXKVnPSgCbBC2ePyvqElC5piEjzl2k0o+3Wls/c+TIkWW/1IPT0AB98OCe54Maf6AU3gqgWTyoCuZIIPeYsxFDLxsyHzjA1VWAOjDKp/XzFbV2CWBzeaRkol0EdRZ+CoT/SqrxZ08++eRJWeLBqHZAHzq0/9q0i38F4A1KITEeWmAexMTgwKygTNBFADnaBuZqtKbScxqK1NVH8ZL5RgE7EtRGA3QUCA/qHs1TSn88NtH698eOHVtishmIagP04cOHZ7vdtY+A6LcBNByg+MAsAK8MkLMsyMsvxFvKi4iG1pdFmzCBgZxNaSrHGhTYNm+Wnx/UAHC0m6bvP3ny9OdEQStQLdV04MC+dyRKfYwIewAGLAEwD6qVsyxoYCBzjcwHuEELT+IdBXEPwHW+XnOE5eUHdaGZYwaMAVATAUqpW9uLy+85d+7c07Kk8TRQnezatWtLa2LsEwS8vWA4BDD7gJxlEQZzFJCtOKbLrwRFRCbL/gzGj3hI8DQSnyuOyYADdmqbMDWBmoieIKTvPnnyzN/zUsZTo2rCvXv3Xjkx3rwNwI15mOOFWA8wgwpeEj9J26s8Py4xEaRHJgPmF4himEYBHhIv9iFIlDdUDq7s5otQrzxsnhw/NqKkcLKymFFQb5veMp2024u3M+JHUyUNfckl+29KU/ytAmYMRgOAmSsIO8x2wxHcQi7iCg8kbawHOVrOZ/6UpFKuuahAQTP7XHEIaGzrWUqpEcFJyoTFaGp9oqfwhkDd2hgbf9fx48cXBdG9VLpeDhzY9w6l1F+BMGYwGQTMES09RmNIvAxWAXDaA0tPstI0iA+bA5HN19cIygBbN0PIqssiPIKXD9SGO9HmSfjeaqd789zc3Jwgtkil6mn//r3vTRL1H5UFG1UjmEMmRlkwxwJZl9mTxE9StwoezJL9GiJnkMYrZzYwBoh5PJt3jBckBtQ6X/NdjOsfrqyuvWZ+fv40I7JI0XV24MC+twP4lIIyfMs6iHKgDRPMXOmXAbJkD/enySOIeRcfVdHMXNfP8bW1HMuHCQgBW/Iz1wFqowfwplV3Ly2v3HTu3LlTjLgsRdXLgQN7X6+QfAHomxnAsMGsHB6lwBzSyEyvIlJJAGcsq5sXLL/ij8xfAreksSVQsxMyDj8TzcMCNRHuHBufeGWsTZ2EIlx68cVXg9StBDLBbMXTwWw/KAtmpYM5H31bJcSN2o0ROxdu3Si4fA258x8fI9OQxa/HqvdTkf8c94JASntntpwD7+nkoKScia8fh59pXwXHRdLkFIcPk8+LVleX/hoRWAUCbrs9e/ZMqwS3QWG/ri+5QSDrC64IZuchA2ab7EJnbp0K5rwZEojNuDkUtX95Ayv56+fHAd2lvCc08mPKgjO52PLQ3tXwuwd70HhQm8sRFB/XujFBrS6f3tLa0m4vfRUB8gJ6++zWv4LCjba7zB4EihMbtmBWhNrBrN1LFSdVnh/EOnAVD1w2XZiKxTws0E2AS4ujyvuYmfKJMOeqgNrmS1oat/65zIqAl7WmJh9eXFy+1xHUlyynAwf2vQOET0OZQLPtZkSC2U4bAjOnQeMK2I0gAZUDgQlijqlMrNaPIC6FsoRzPQNyPmVmBQtvhhYesoeLONxgUftPmibXQW3L5bWnQWfX1tJr5ubmjrgSZcTaJTt27NiqoP7UAbMdcaPBzGge+4YDM6fRcltYNyE47atna/+qDgRZhW/Y52RE1E0Ulp9HY5sXMBGj9WQ2P5aXR1PD6gH9afsXTt7GtdrWbCafg+Wc0Ik1OXbu2P5nBHq1rSUM7ZymRo5eoTwvFAKzNPgTu1CtUsx6owIMsMPRNydiQMw9yKfgB/7F5Km/p5Jtbs7GLoJUX6s60YQ6DNdDdsMNWtkJL2EWjFNMGl3cak0uLS0tfyuYFgAO7d9/bVfRHVBoiKaGBGZGRn8hmN06B2ZWYK51C/IAWQE7YaR1fHy5ykBieAksoknU7TG+Ze2BZI5wbj/JBHH5Wbw8Lrm0cPXw6d1OrF9ytjx6VN2dSKB2t4srz5w5c9Tm5pgcXdCHHDAbjMkI9LWmMl2NwZtJ603fu2G1sgXm3MVmmBVWHpzG0gON2xrAbPPM+eb7AAvt75Ox9yA3R+ynCv0y1SeRYsrUyYYNZBq2oOl1YncucfyNlY9qutHAf2BimUkP7tnzfGomdyvFzwYWg0Atpa1hJeGl7qkIqwpmSSuT608t9hlK/D0BfBkHbGYJ6YFkoUkTlTmjwyzJ7f7zBi3y5waGEZq6WFpa/GeqfVvbGqS9DyeHNLhUCV534sRpw5VnAJcayQdgbZvq441k7RwDZoOngzT4qAyYc61me2NyrSxpZC5A1ISweqpcM9o/CD8mbv5QaiR6+mIHN6O17US6tja8O1KD5RSEoKn1sgjVsX7nm3Sx5fCtSe926Q9tWYo4u3fv3jM+1jimlGoaEfRCjvU3c4VVpLNqIdabYQssgDlWK/s0sq/yOJnrotCUsxM/FylCY1PKHGMAwR7WLkKamt2OJbjz/C45ExuFZg5od5XgtSdOnP5afl9o47Gxxtug4AczRzaY3ccbAuaQVjZulHPpJCg06TqBuZBH1+Dcc8ga2+Btaesi3gCamlMgbp31GbHYENJJmtnOL03pX+r3unnxTnsg2Ldd5IFgJU23DmDmBn3GbQjIGojzZzHmgA7C4C/PN2Jg6QO3BOyct/NONYA6OE0uvJCjTHTS8GbLICVTUNfvmp29Jr9PgGwwqBSuNXhzo8+AQNLot5dxcR89aWJnw4GZsZejtDKARDFTExaIdb56cgdg+i+WFAz/tQN0OVkUsMUlsRKoy5S5zTKy7p0otsbVdsfE4g5j6jfzywQAug11s/GCWuVJOzi4LsTJ034huAOIgcGs3zNg5rRyH5BmRA7IuswGkMoAVyDRS6ID3JNVCNjeXogDNeCUnX5haGamrKIcAR7cFNhgsGaTgSFSbz98+PAk0AN0kqgbdKbOS8kNrB/P8zIFb6ZlO0LWDGb7Rg9L09QL5B7jIIg5JR36QW8kMmsH3GIUAdjmxWCgjvEz+3ixsgHmWA2C/Wznpd0QsOPcubmbgQzQzUSpX8oZ2SCRpFHmrSixPh3qa9FC8kgwQwazpaXsTDgR+kmIjSACMRLNzjR5iK8ur5KfK8AwNaDHk8qhALUy01hyiSsqbRm4RmVhwWbg9NqhTPR4Rb5JBuiDB/deS4StnGlhChPHmXsBdgTvfXFZcLfR+bVK/p9TiQyYi3g56JhnXgAL/IwonJIQ+Iise4H2M32ttG1D+xREv2FboLb42iKYabVnXkXVF6BoKI5A5bV0AmSATlNcwQ0eorVzoCX1XUYyiS1SMQWrrHsrrbfiGJ6ODIofADoBHs0qaVAbYGJ8Tx6O0DYwrPcRtTWTJwdMJ31EPXFichF8zgExL443AAIO7b/oosuTJGlc7jy1GEbwZdIoxx6PEVxqjZJrrgyYRa2soUXUalpACLgcxSwtZfkKeRu8e54e6d3KgbofEvIz+xpEyOsRo+jKaulVlV7XpDR9LseIzcgjtFPIkY5xVjYrTl1gZvNz+HICRQDXEsBtjCYHsq8ES8SIpamj/NI4nksBipmRy0Gdy6B0fqTdFzyU6T5TjKXEpWXzNaJn4jO9CQlpvBlYRISrmkS41F7ragAwjpcZmfr3VboiJ3gQMAuai2mBbIMS5e8xCZWPbzLGuMp7iPyvPcUL7XkeNyWnyIv3tVjkdrW+/UkCdR7PGEdoEUSMCQ1KZ5Ei7wFVf3Dsm94nRmb7WmVT8IpwVaISNcPwYVEQo519XWtlU8O4Hg6Yi4fKuXReor/Xz09VdrBk+eabDdwccrkKc07okaR39y3XLPgW6Z1mZ95HlLnds0rkxRabucuXgEOJIppR5lMxUy8pszWFtDMrHyOo8pRW7WDmxegBJwdymFSPb443afVdDB+lJy5E5k2jQUHN89VAzQkt5W2R4Xgo0sQl9vVyxphHYWtCwIzUAiStyb1YSBvFjmB9rVtx8SqCOQedzcOp0IA2dkCrZD+zjWh2XYeYRxbRBiNXDjFlYfOR/MxOWl/DF/Os0FMJeLEboCXMbAKgVWRbsYskzS7KA6toZz2NPXMkLcw3ePjurQIKd9kykHUA2wiqUoZ9pibAHSrKQTlJdR5GWO+GBTW3GIiRy9cvsWAzROZXEXJa2ocZZ2ktX84zibLKI3QdI7BNZf2LZU0NKS8uP04bOVkJpkUOZEl+Y81H5E8kC9iOb1y5ZcJpa4OfnYWt5Txp9ZDQ3EORxrMirywZySUPGqCSOPWm3ZpqtHRLY1nbaSyNxzYupuCrgNlMwOtkH5CLYM7+jEByEOAZc6GBBbS1zVMAdUxat6ysSytN0AQ10vDYcRqB3QCZ58V66LJdZWx8XahEKSSNxJTFEirk1TB4izflwcxp5Sggg7GZYzUYk8ZObngdOED2ZLfD9AsO1BIwRNGVBjwpXr/ijLyKxwNq6TRNg3GKHSqSFuQEcrVmnKRE5HwEUs8v1tQg1QShCahGv2K49mX4Tfvx3IagqoxbzEyGQT7/bCwPXrUDBKTQ6rT3J9vO1QVoBUi7eVQtXT+EmzipOobQ/d56nnkexjIHy32tXxtbrmJwGVL5Uou0NaadnjP6XY2gkCYtXDTTxdR4B93uKpJE4el5wlNnwq13RHHUaDQwMdFCo5EC6RIUEQsem4oe0JjRgTHZ4jQCJr6dgbeRWPGTYIJYxiXI7g0KX2LA4EuTKWydXMXy8ip+frKL7TMKR0+kmBwHdm4dsD8bUUHdbheLi0tYXk2hGtPmQ0szyb12PRTp3SioaWcuC2WNLCsY9DEC52HO/kY1gaXlFRzYQTh+CvjGv5vG7lmFI0+muPF9bTxrfwOn5rt8JiOqRGtra2g0Eow3JoDuiqilg4rOSiBpaX06XFF/nYqzvoNhm18nxlNbiFiBAyTZ57Jbh9HOaGJtrYM0JVx+SYLds1mEw3sTHNqTON/QG1E9tLy8AlLjZqCm0exxj6nsrPASFDQzhPvgqeh1mRmxfPndC0mx+itJFO4/kuLIk9n9fUdSPPpEynyLeUR1UZoSbA+v4ympkUJ8fc+bOoBE29YKL2NucINB58CTCPMkf4dTZ1NctFXhpve3cWhPgp8dT3F4b4Jjp0bmxrDIRYFQh77BXezgkIT45iMxm4TVayrgzahI3kYCybPRfwYAJ+YIC0uEy/Y1oAD8woEGTsylONuuR8YRuWT77/t1yNdVVVOjqpmhBzW5h965/QGori7q1DyNBoAbRBtlZgSpp6odGzqesQB5oSVJmyHNe3cwOJSWNaJKxJuKtn1pPw/fu5gLV7qE04SL5O0+7BGsbT8z1z4fZUycEW0CkhcEDXTNr5PuRyhryvQBHaVBy9OwuqgRnf9UGhsCNvXgxBkA1kjS0kT+fmRunBfE1lEJs6NHQ8Gc6rnt6mRYUMQOiBjvhu2WGRaNjyn8ye9egr07mv3eigjIdz9T5lMi6vmS9PDes+LaSK89R+/0fCJ86Y4VfOabK+vwZvWR7TqrdK0A6AvUaq7gZjiKS6L/uff/sLwkw6TtMw286SUJGqoLUA5c/Zca92SHW4AmK77NY9cY4TPf3OCX3gDyHmEAZho8wMs+R8QLaGlAWEbgaNpgc+Op0x286Q8ex/7tRbMsSpqMMwE07VsEkZOmf01asn6a+483cN7aVKFJFIEqYcMzwcLx9i5OKlvepQQWMqrT0/GcixV2zSr86BFCezks212PdHDXQDle+H4ayaQw7hjU1WbaWtnkvPPgxIlckWJWXFWeTapQGJfuS7BlsoMf/GQJr7r6wgTXZiKva26IoyCbd3BxUhRTDnDMgDA6bYnnEm2bAh4/0cXcAqHL7JIZ0fqQvbnXvKifKg0KdeIW5w8sb2h2MYLuO0K48dpJvPBywsPHBxVoRFXs5tBJSdxCpUGpAqA11TvESZNBPSWdLuG2O0eaeaOo+t5CaNuy+FaTrcHm0VEa0PW75twJlY1y+ykFNPj1hwIROtYaqURla7arEBGha22NbCQQK8+mTtdyiZV+n4zSlGBbafJgUA/sWcw1btWzOUVtwYph7DAdBHFC2mJufwPQPDme4AWHFRpj5dI9PUf46c8zFM60gCsPNZA0KgqRAg8/keLkXFZpl+xS2L8zgYoc6SwsEu59NJNlYkzhBZcpNJvlC7PbAe49QlhaCW88tkFnmIk1z9nF7EqK19C2XVsTmZOLG2cibJkkJA0FKrl5fHZL/w1mWtm3Ecvy0Gn7tCoAPdPKeMfy2zqVYHyMsLpGmJ7ItHMVWZIE2DZFWCo7kTms+lNgj7/gSGz7XLuua9KkVt4j2hTEzQD6A2rkrVG02+5CB9yF9nrr+TrDxEZZ3lEmRx12raSVg6curZM9Pb9I6HQJY2PlMpxv9wv8zALhwG6gMYANPb+o8WsTtk6raLXTXk6x1snSn1sirHUI4+MVbOgucG6RAVLFGcCq5nSl03APXLyHdId3fu0cIFJ464SFSbYfWpnXXFz97DrDs6HHVwCQYKU7gaWl5dIvWIbOdy9Ht2vOm9Xl5Wi1JjGmlkDUNZam5HatuXyln9BY7lI81+NCjNvnTWz8HCH2cpmmG0XPZPN0JetBRK7rqyylBKQD8tApA3g1fnW8j8x7c2DD1v5iZ7ZZBB7R5qPNjA1zT2FNTH00AvP5TZsNG3YKedf3EOQegfn8pk0DZk9Udtf3MKjy2XOjNrApqNh6ViVtDO+aqPIJ/mVopJlHJFHd2GhKTAn1uIC5JaB18fbReBN4zQsTpCnw+MnsUEcfNRKFX71pB3bONlH4iJytVWT5l8iKo5tr1N+6VfiWqBeNcOdDHdz50FpNb7v5yEEUg9uqYPbhxzissTIXKUkE75ytqnNRLIDnHW7gO/ct4YmnU7zx+hbuO+KPv21LgpuvG4fS9wxql85G2CKOFt4Lo4i4F29JcedDtb3upqAytVeXzWxT3EwhymtUr8ACwzo198mzKa481IRCB4kKz1Wdnu/i47eexJ7tCaOZ9WtTC+vPSExjpldQeOCJBBfCvkOxVH3VX4M3Q+Jbej10DOjKTZUTQMya6Ih8fHTsJEGhgcP7x/D1H8Yd7PjDRzoD5JhTqd2S5w2RcG0GhmFXBsxVNH6FHSs9qPE4rGdxfk2q+vGThMdPjk4pHQpVsA5jwGy2Cz6+vRRA5zvwnsI+074AdQ/6Rk6STUAD1oENZkPjD8Db5lvLrm+OsWFq1sl3ROcd5XUYULyV+eqU1JGRsVVdKSQJ004svzx37etKRrS5SarbdIAJGW9+1ox2noU79S3eBBhr9zGfsJUyCg4+RrShJNcPOZdDUUjEaHyNvDa0bgsTsjPGjAmSOndn24b3OqO52QAO71aV1g93CTjyVFqsjT6wS2G6xMJ6UgpHn+piuTfPsmsbsGMmqV4GCjhzjnDibMZgcgw4uLuBJJJhSsCjJ1J0JKePzYZhWxuYPT07R5UGhfrhhbqno+7B4HrS5LgqvVslpwTA9GSCs+0USgFbJlXJD7UTZqYTLM9lPdvWqQSc1VaGZmcSnDibtbDpVoJmIx5gCYAtkwnmFqrt9q3qmjPd/NUaRKViEwW2ex1mYOi7trsSpdR6K+oNo2Eqgrq0ZUw96ovQ2Di2SV1zBcf2Qv38B/KxyPfZecqB+CPaeGLrqKeIuAHgetYhaSZHYS5wtqx+JscQVMlm8GYsr2X76KrtwQNWO3mlAsurhKnJcnyWV/plsLhCmKiwudXgt5pq19ksWOyBNZQCK2vlzI2hftak2IRqP3SD1cX7dhcjO3aTKvLD9Kgfp/dH2tQavXkWma2ktBhcfEKCtXT4m2QbSTY4LEudNNspnZNS2Wq/WOqmcDbbjjWlr6KGiQhY65gV3WgAzUhA2+/Tak0ioUWgt0nWnhSh3mk2rJnJxNcemfGNtARKM0s6d+d60/Yu4o8xcEMRtcIopPGhPyc48+nrONLspnB2XVchImBlwJWha3UsK9Go2zVBWokYDUn60UwhcyPaHKl+Pl7iZzzkriSSzlfPyYVO64GN2CMccgwn0kjUYFyfS7HgK4+Y+VFyFdq5TeHygwkatU3wP4PJgkJWhwGPBsrXYYwHjZMnv06kFuB1v9i+wkg7qRC4clcUT3t3KFxzGaG9tILXXDfS8XVSpTqMwIjRSOz4HtY6sbpro82MQVp4ThdflOCOH6/ioWPdkfevJiL067DuMuWwEW1uaNQfFPYGX4aZUZNiy1pgvyBy96Axy0i6R4QZHJakB4528doXTmJllXDibNXT1Uakk2mCaj14yPsAf+mXVqCe3qCZ33PT18a1BjhCf11H5nZzF/wb8ck8Hy9WZl2OsrS0AnzhO/kIPI7DdVdswfRkYsa3bSa7L8z6SpMRufFtA+7oU10cPY82H5BggkqUr7rsdrtOAr149NV4trmhmPghM6SZZ56nqnuzamhHudRo6tDSZWjrdAOvvGoc2ogYfSSa/+s9Tnaj3PgeHkTApTsInz65Hm9WA3kGRRLYUqKgn9D7UaEK5gagHWPAzhKGqNDSvBmRpsRqdTt9gP260Hy7i69/fx7bpq3zFgz1ylWs3b/y3bKtJI4+rXA+OiSDqo4xBwxNWrR14s2TsrrUit8k27aFDFDH7DC4Vl+cv1m09L1Hap7NuNA2zEZq5yAbcaKufyWaGwH7nPVyVFX3RQbkeemIFmkKa9usI9ooCs4RMHVra+eoA9Ir4o+ImNV2gXsZoD1Nn8avZJVe3Mkzkt+IhkdOHURoTieJPbC0sCOZJ6IQhkWXJeZnCj3XPpJan2+iReYVmemI1on4XtcX3RgkRn7FStLOPmzqZrP8FaxItV+MmzyzPMH0gTSbYXnpiHiK0c7sEQYB7RydP3uMgaDKfbaQjymfscVeSFLF5hrR+lHUQFDDCxFV6m1jxl7ECOOdWInxSdsuP2mixcsDYN2GxRrsdXAQJAmwc6sqvR46JeD0PGG15yBpTWQf46wickrAmXPAylr23lMTwLaSvLop8PR8/2NGM1PAllY5Hp0ucGqeYG/e9zkn2EfCHASnnYFyg0FpgZu8HtoCF+fCy9nYUWUh+NlGg0cvH9gDiCHTeBOYKPlZZABoANjSAk6fy+63TMYvpOd4TU9SsZZ6elKV5tVIsnRne5+bq8qjNQ60tf0UbCfOgZksuzay8gylGujNfV+V1Q48t5jkJBnpnKQl7SLJ9LBb33ogepBOYLN5mOuQx+FRwtQQnQNa4ira2R4AFuHaTbm262l9MfaUnYaJyi9NHNHmI8HUiJmDcEgDc3DpcYBMQEvMjAxlpmwL5OJJBr+umdcZ16tdVM6wk/bLZ60zmH7sdjVeFdcu5V+Tta9L8UiFnrn445oaqQBml0dcD65TwdtOYzFoFoM4hG3hQjOLyz6lhP4BImUSuxFKDCxtShLghqsbGGumeOAx4OgJf9F1u8ATZ6jCV2AJq9r+wbk2YXEVqCa1xWuBsLhSjhcRGfsRT88D50qODSgltjGJWpb8H4XyaWcVoZ2DSrS4JjS5wZ8xUOvde+EgppG/5W0vL4WV16B24PMOJXjgyDIefaKLN1/fwtET4TSdLrJzvQakDJT19C+D8iIAq2uDy8IOCnsXNpjLaGd92Q4b39drM0IlRiYCX+6oXLNlsJLD4M10Lz4/MzkX5WhxhbB9S4LxMVX529sjsogxNdzDOpkkEQNBB08ebPBpsjvvxApgHYfqsS2qDRDJfuza8V6GMj1ynDA+PobXvngK37q/hrMJnunEgTmwbsdnapg4YJ7b3owI7QwYJye5trQzE+PxS3MCS6YHaW9h2+B6Oi7bMvSjR55ZQN6+ReGmqxL80nMUtkwA3Q4hIUK3CzQU8OBx4OsPEu75ecXZO/2aAbNPqTmmhmfNhuNn5gDP8Qag9u7ZVdwZmZA5SDO2UGmS23I5Jx9pF/0G4x7D6/DR06kGKJkc+slJ5yvtmVX43X/cwLYW8MXvLeG2u1cwv2iiQCngmoNN/PILxvHiw2P45HdTfP2ncfxbkxPodtqgNBsphsAM+E0NyU0HmIuYfNpZ6unVnj27SAeegmKnnPU4xrnQlpY2gO/ca1PpjHaXQD0CtEz/9OUN3HgV8NFbF3B35AaF6XGFf/aKSVx7cAwf+BLhzJI//uTkBNIeoMuD2bwxtLMFTHN/IWAlZfMzjnaGDWiGpLPpDK42qAVgZg1BiemktCoZAdqmRAEffMsY5hZW8W9uXahkQjxvXwMf+eUp/NE/AA+dkuPlgE47nVJgzi5lU0NPa3+6QtLOvoVxBOsbK/ZpOCZnS9jIAWIRluZt1WRYtoBGlNH73tjE/Y8t4yP/oxqYAeD+J7p49y0L+OCrCLunA5G5045LgBnw+Jw550DvwjcQ5Lxz7sfrw/Y42y34XtbxU0J4AYFGoDbpV17SBHU7+JRCrhYAABFxSURBVOQ/LEbF9018nWoT3v93i/joTYQxz0rDqDoy7q0QD5hdE4XP0Ali4iQgjakkjDB6VZZ7gntpw/3iab2+bmVEfdoyqfBPflHhD285FxX/umeN4c0vm/DGefjpFH9zzzJ+7cr4gmc9GvYgsBcmcbXB7DwXb3jtDAIS6Zyy2A2Rjs9NI3vbjQtqOYMRqHl6900J/vOX2lHH/iYK+NCbp/Hk6XBh3npvBzde0sV0xDR59Lpoj93MWQSx2pndON27F/cUOi3C2yLdZ9J6WBPU5ezpZzolCrjukMJXf7QSFf/3f2UKLzqQ4P7Hw4dVpwTccs8abr7MX+jhMU4fFCEws9iL6bEFiyEl0lbbseCsZnpEze1Hdk+j1aR9euGzGvjeT1aj4j7vUBO/9fJJnJhPMbcQV4JffbiD6/fzS/yyZQpWWPEnvzdBFARzjaZGzjdh0hjMfKaHIVTx2QAKatuqNtcznV7+HOCrd4cBnSjgj351GtvHCMfn4mdLz60CEyqN3jbnAzM3CJTHU/0LjzLmTQ3AGAOaW7AI7mo34wb8clEtnR7mTI1rvIrLIq3mo+6lBfpT8KPlRcDFswqPPhWePHnP66fwisMN0Bphugl84A1TmU2RZturPvF/l3FynlcbJ9rAjkngacHlz1uLMphRAsxOXhGmhj1NHv4KFiywWXHyS+qtZ2aSc8nYPG1QQ/XsohGaAQCzLcLcIg/EnJ61r4H3vnIiWwbbIVwxo3D5tRm4aZXwxeMkghkAnlpIsbtFeHrZLfTSYO4Fx66ojDU1irBibqNPCdtaGOaO6aFF0G1m42OZAdPDYMOYH5zAZWi8CeyYuYBaQ4T18OG3bsHOSQXqEKib/dAF0CEcXQH+9Zf9A0ppIF4JzGSCWceNz7SwcWObGnojsdMlrPxRLSYX2u1KQv7pGFDrW26q2NXbtyjc/GKFy/Z28aqrL4yPrJxpA7NTcgP9zZtauOlZDVCnB+IuAV0CdQidVOFj313D8TP+fV17W8AJab7GqJLqYLZ5esFtBRRg5kwUFMfpartHYJsB2vINy/TQj8stkuQJ9DM9GHuaXTZavCBpYdU07KX7FG7/0TKeOpPiDS+v8PHBTUhPnCEcuqiBM23ejr7joTW86c97myMJ+O3rJ/Ca3QB1Cf/zMcLn7wwPKHdOKpxZ9Sxr4Lr0kmAu14ObfHQwG1q8d+N8ksK6tLmDFBkr8nyDxCqg1lfj5S9UBdKPHE9xw7WTeOpMB0urCm7RnX/07YcIN105jh8d5QF972Nm+PtumAC6wM8WgQ/fFlhSB2B6DFjpKEjHXtQNZoc/B2Y9rc2XuXEHhXZExuuRIg0OEquA2ljXqmfKrMoL0dk28KXvE1rjDcwvXhgL/X9wlPCe6+M+UasUcGirwlpK+LffWfMOBHO68WAD3z3B92aca9VepF8WzH6T1gSzYYI6svXJMC5jZgM5P3OwFUbY1Lb7xeBJ3Bg3TGsdcha6n8/UTYH7jwOvfE4Y1M/e28SehPC5h1N84a443/Wv/0IDtx0LmGccmGlwMPvwZIOZMzWK9+AEloQwZgDL7gf0gDp3jIszURcOJgemv/w28DuvagVdmVfuT/DwOcJHbotbQ/7GSxv41lMNzEuz5L16sMGcm7R1gblg2iMfmDlcOICWhOHOEwstA40Bdcyu4Wr6+cKk+WXCF+9T+MDrWt54z93TxIe/uYq5CHPr8IzCW5/dxC2Pyto526Sh/AuNUBLM7L3GKwBmDhX8hzete+mrshnTMCCNC8e1wTjwLR5pmqIx+r5xQX97L2FqvIm3XiMvjfvKA6v42v3hRUmz48CfvHQMH7xrTDwtKUkSpGQ2jFrA7LGbfZ/P5u4LWYVwVmC5pQwO6tDLgghJMgJ1Tn96O/DSSyfwe6+YYBfw3xOxv/DZ2xT+yw3j+NgD43iKmRkEMvNCKWUC18JGYRUOA8wMcn2rMNXOnTvFx0Smn1lZF0YRKNdnzO4tRL8BuN4+3kWnFJAkDYxPzmBxcVGcSn0m0juvBl68r4M//j8r+MmpOG/ORAN41+UNvHxfAx+6exynBDADQKs1ibWVRXQ6q+y2KRvIxm1NYDbHW6KoADJAp+A8dqSBrkZQ235mjgcntVJAc2wCjeYklpaWRqDW6OIZ4Hde1AVSwv/+8Sq++ViKJeb4r+duV3jdoQau35vg1iNNfOXnDe/oZHJiAkRdrCz39y02m02srWWmjKiVtZs6wSzZzXoMtXPnznkAM2amZrK6QG00EolnfsOBGkDSbGJ8YhrdbhdpSiNga7RnmnDDgS5+cU8HSAkNIqx2CU2lkBDw2LkGvvlkE3edbohH+GWfNFZoNBpYW1nE6sqy45ECNiWYAWBB7dy583EAB2yBbRoU1NkMSiTPPInPBGk0kSSNbNZSMGFkzoLcdv56WVSY3PHRsNqh7xRQyTbIhjHZ2xER0rSLbmfNBWAOOsnE6N04EjBhQwAzADzRBHAWPUCHji2VPiHBzSbmU+Q6X/vTyAVPMDzQaxSMtiYCup0OUtXhexP2RlgXIjSoWM1f5fsv3nKuAPQ8ibxox4PACC9TzruKvbyOYAaAcwmAIznjELmChQQxTYLYAnG6L8YLAvQ24TL8iL3pyWNXL/V/+WVaYmYymyGL/2Vmkvw8Kk/rB0I2T0B2HOtttfIgwAWzIEPKgNkpZ/Nxn58TVALMHE8PKaXOJkqp+0p9l7tEC82OjSInftCtZ/EB5dpad+qTyK8Iz/kwrYSBtgkMMnlUUJyuTBXtDA7ARkM0lEb+Xi76ChBbEySZbPw7FicaeerGCRP4lQZzyeIiop81iejecsnArpKzzQ9zQZJ78DnHA3BNEMA0ZQCFlNx9b4XzhDEBHN4aU3YFmXAvnZkWY3VU6QHDD3JgCC1au1SKX4griUUAv77GuuGS8wpmuGDu0U+aRPTDKil9oHYGaXmYVajFONHTOKxLFOfjqfzalQsIANu54QDHAMBT+T5UR2nmEhWY902+L5Hll1WADFQEM6uVzcyGCGYQ0U8VAFx00UWPAbikCpOQn9kpTM6tx0TkBnfsZlkB2KJ8bvI+MIJxy48A63ArsvvpmBnc/NL3ibQQkF0ThosUC2YzcMhgBhFdl/RubqvGxhQgRmBdg+tRObuaK2SOX25fS92fb8CVD3hIz9TIXM9K+sdTqbGJh78TV7PzC8wItnEmh1wG9ruHwMwVTchezuIMF8wAzi4uLt6TAIBS6svVWPUFIeGg6vw/u3B4rWNHzG7tgQmLtwCwCzmtQrbzMvBsB4gF7oIwpdTTADjQelSnDt5Ui+0BMfe+HFujXPWBthVRKvOQvQxYXiMOzB45Q9Q/y1zdDqCbAMDMzMyXAZyuxlJrfVyXZAFRj8ANaGxtzX1row5g5+4zH7F45gItwJcyMwL8HPY9AIdAXAbIucwckGFGM/NxeJPjC7c3Ozv8GD6xZC6Yom8AvdV2R44cWQbw1wMzLf70770tsxcgaWtuYGLzc8K1QAnY9sqxAgARJRvAsmMORDWAAM+QQDF+bAnIAON3DyiMGK2c8/XyqwnMAJAkyW2ANgzavn37VUmS3DMI05y8gzzPVLc+YDT2F7KReZ5C1OJBmsYddeXLV6J1WVdSAgRc47efB5cHB/LlgGzw9SqyasSU8x3tdvslgLYe+syZM/cS0f8bgGn/GdxWLGlWO5I9uyjxK8KNCzPc0cwpFVrbZ5LY+cZo8aGAmdz8o2SGrI2NHsAyB6TXk/KtCuaY95CIK2el1H/Pr+0V8x+uypSPZ93rF9LL9lbQxQ4aDXYMkp3K0wKz3iAO3EZSC2T2dLbXZtCeOY0ll6f3KyUT/HnbQdyMKMdYMi+4dSNFOfvqd4B2L+BuDcBn8xsD0KdPn/6aUupbFZh64oMFWHEDvULMiCyoGZ4i75y/NuCRKk4HdxmAAygGacVgTf9ZINWfOel0kUI9IKyy8JQHWYH6EWs+IJfSyrnMVp3aPKuSpzw+u7CwUHz42tkVOTk5eUwp9c6STIMUmjzRwRszGePjqz+zl4Cy6dm0LgApkGYQMjef9gHnUKAKQmnsvXp2POmZBOTimnPbRvCNIQ/uUqXU21ZXV4tveDmAXlpa+tnU1NQ1AC6PZFqKWG9Tzts3YOwFlgG2M7B0Egh8BFK9f2XMAZ2nL03SaGTeBsv+DJEPnPatWIclgWyz9x2qOShsArj7fLvd/gs9gK2/7du3X5IkyQMApiOYliYdfM4uFuumLLAB9A5rkmWOBbf0aFjejIEWMDEPDdAxvP1uvjCQMzNCAPOAWjmTz8uhA+C6drttLK5jD2JYXl4+OzU1lQK4abiuKJd3HcCW9kMKLCIDGd41EufZCSeKCmLGJj6WcUDO+Q5DK+e8A/Txdrv93+xAX700d+zYcTuAlw0imEQh0JXyMQv+ayddBAp9AN9IzZxFjApyeUdoyyggawHsVq8atDIQVR5Pjo2NXTE3NzdnP/AddNFJ0/TtyLZo1Ur27CLntSAjAhNuRSYi5zAUm1/MjCBZv4K/NAM4IDmVx+Wh5RWdPWnuRG803gWX5+XIBQbMvXJdJzBDKfV7HJgBweTIaXl5eW5ycvKIUuotFeVzKGjbhjwRgsbmvBkxyz1jNDfrzA9yDlPINVeeYT+dn7c88JQ0cn7JNcC6+q3InuqT7Xb7I9LD4Engy8vL97VarRnUYHpEbzwt/jDhzI1vPXQZcHN5b7iZ4WUSYTMXUWUQs8FMr1jGFi9LkeXx01ar9abFxUXxONWoo+2Xlpa+3mq1XgDgikj5HKpSgTHAtoclXtiWBHeZwWUZqgTmSADZ+wvztB62YoD+THcn1t3Eo7w7RAtJkrxmbm7umC9e7GFx6eTk5DsA3BEZ3xamSjKvfV10fx4bk2eIYmrdM8XA2vnsuo6StrTPF9yXj/lF8i7+WVPQQlZsgJ2sGFhuEJgBrCql3rywsHB/KGIpvbNt27btjUbjNgAvjk1TZ5fN+a+NZ+yNGMQ+1D+3UTcNg2/eKKWBXT+eP1BKmm8oGAZFlgcBeFe73f5UTOTSHWkP1F8F8KKgJMPyYRPFz/SVBDe3v7Dqh4tYvoPwEBAo8Q6BWIzTe+A/hWkwiiyPVCn13oWFhb8IR82oUk3Nzs7OJkny9wBeKsVZDy0Xsm3LgjsoM5s+XITl9hbGuB5k3gOBuPeQ9WbUSLFmBjLNfEsZ3oOonont27f/pVLqN+wH691lV5oRFNZ91Db2C03G1OHkCCw0KpWdZrFsAjC3Abyl3W5/pSz/QT7g111eXv5frVZrDsBr0avCjbY/q4CbPCaMlCaG6iwLmxM7IRNIw0UI8q2RInn/GMDr2+32t6vkMfAXKZeWlr7XarW+D+DVRDQTTFCBKrv8jAuReQSTEvkVbMvJXCY2972baD5k/Gc+2ngwf7Ldbr9xbW3N65rzUW097NatW3c0Go0/B/BrdfEE6ilkCdxeEyaKIU+1AYPTupY7sQwfX/wNBvMTSqnfX1hY+GwoYohq+2bwysrK0vLy8uenpqYeAPCPAGwblOewCllBGHwF0sTQ0EyusrxL+Iw3EMwdAP9pfHz8LfPz8z+oI7/aP4K9tLT0wN69ez+xsrKygMxfPVmFz3oWcm0zgQNMIIVZB2JVnPTYIDCnRPQ3Sqm3tdvtTy0vL6/UlecwdhMVNDMzs7PZbP4LAL8FYFdsuo225aLt75J8q5I0ABw0xw0o5zUAn1VKfXRhYeHBYeQ7VEBrNDE7O/vrSZL8cyLyTshsNJh95FscVTvloPW55gZhv77lfKdS6tMAbllYWDg5tIyxfoAuaNu2bZcqpd6QJMkbiOgVAIoPV29mMJflG3SuDMB7UFqHcj6rlLqdiL6RJMlXzp0795OhZWjRugNap127dm3pdrtXEdHVAK4hossBbAcw2/ttrSOf8xgYm5XvQv4jotNKqSMAfkpEDxLRg4uLi/cA6NaRUVn6/5wskA41dY9JAAAAAElFTkSuQmCC" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="코인 메모장" />
+
+<!-- Android 홈 화면 -->
+<meta name="theme-color" content="#0a0a0a" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="application-name" content="코인 메모장" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0a;
+    --surface: #171717;
+    --surface-soft: rgba(23,23,23,0.4);
+    --border: #262626;
+    --border-soft: #1f1f1f;
+    --text: #f5f5f5;
+    --text-dim: #a3a3a3;
+    --text-faint: #525252;
+    --text-ghost: #404040;
+    --accent: #fbbf24;
+    --accent-soft: rgba(251,191,36,0.1);
+    --emerald: #34d399;
+    --sky: #38bdf8;
+    --rose: #fb7185;
+    --red: #ef4444;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans KR', 'IBM Plex Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .noise {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .container {
+    position: relative; z-index: 1;
+    max-width: 1024px; margin: 0 auto;
+    padding: 32px 20px;
+  }
+  @media (min-width: 768px) {
+    .container { padding: 48px 32px; }
+  }
+
+  /* Header */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+  }
+  .header-tag {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: rgba(251,191,36,0.7);
+  }
+  .pulse-dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .header h1 {
+    font-family: 'Playfair Display', 'Noto Serif KR', serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  @media (min-width: 768px) {
+    .header h1 { font-size: 3rem; }
+  }
+  .header h1 em {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .header p {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-top: 12px;
+  }
+
+  /* Input section */
+  .input-wrap {
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .input-glow {
+    position: absolute; inset: -2px;
+    background: linear-gradient(90deg, rgba(251,191,36,0.2), rgba(251,191,36,0.2));
+    border-radius: 10px;
+    filter: blur(8px);
+    opacity: 0.3;
+    transition: opacity 0.3s;
+  }
+  .input-wrap:focus-within .input-glow { opacity: 1; }
+  .input-card {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .input-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(23,23,23,0.5);
+  }
+  .traffic-lights { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-r { background: rgba(239,68,68,0.6); }
+  .dot-y { background: rgba(251,191,36,0.6); }
+  .dot-g { background: rgba(52,211,153,0.6); }
+  .filename {
+    margin-left: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+  .char-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-ghost);
+  }
+  textarea {
+    width: 100%;
+    min-height: 160px;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: vertical;
+  }
+  textarea:focus { outline: none; }
+  textarea::placeholder { color: var(--text-ghost); }
+  .input-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    background: rgba(23,23,23,0.3);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .detected {
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .detected .mono { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent);
+    color: #0a0a0a;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn:hover { background: #fcd34d; }
+  .btn:disabled {
+    background: #262626;
+    color: var(--text-ghost);
+    cursor: not-allowed;
+  }
+
+  /* Preview */
+  .preview {
+    margin-top: 12px;
+    background: rgba(23,23,23,0.4);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .preview-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: rgba(251,191,36,0.7);
+    margin-bottom: 12px;
+  }
+  .preview-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 12px;
+    padding: 3px 0;
+  }
+  .preview-date {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    min-width: 92px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .preview-sep { color: var(--text-faint); flex-shrink: 0; padding-top: 2px; }
+  .preview-count {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-faint);
+    flex-shrink: 0;
+    min-width: 36px;
+    padding-top: 2px;
+  }
+  .preview-coins {
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Compare section */
+  .compare-banner {
+    margin-bottom: 32px;
+    background: var(--surface);
+    border: 1px solid rgba(251,191,36,0.3);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .compare-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .compare-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .close-btn {
+    background: none; border: none; color: var(--text-faint);
+    cursor: pointer; padding: 4px;
+    transition: color 0.15s;
+  }
+  .close-btn:hover { color: var(--text); }
+  .compare-dates {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  @media (min-width: 768px) {
+    .compare-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .compare-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px;
+  }
+  .compare-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+  }
+  .compare-card-label.emerald { color: var(--emerald); }
+  .compare-card-label.sky { color: var(--sky); }
+  .compare-card-label.rose { color: var(--rose); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+  .tag.emerald {
+    background: rgba(52,211,153,0.1);
+    color: #6ee7b7;
+    border-color: rgba(52,211,153,0.2);
+  }
+  .tag.sky {
+    background: rgba(56,189,248,0.1);
+    color: #7dd3fc;
+    border-color: rgba(56,189,248,0.2);
+  }
+  .tag.rose {
+    background: rgba(251,113,133,0.1);
+    color: #fda4af;
+    border-color: rgba(251,113,133,0.2);
+  }
+  .empty { font-size: 11px; color: var(--text-ghost); }
+
+  /* Entries */
+  .entries-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .entries-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .entries-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-left: 4px;
+  }
+  .hint {
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .empty-state {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 64px 20px;
+    text-align: center;
+  }
+  .empty-state p { color: var(--text-faint); font-size: 13px; }
+  .empty-state p.sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-ghost);
+    margin-top: 8px;
+  }
+  .entry {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+  .entry:hover { border-color: #333; }
+  .entry.active {
+    border-color: rgba(251,191,36,0.6);
+    box-shadow: 0 10px 30px -10px rgba(251,191,36,0.1);
+  }
+  .entry-content { padding: 20px; }
+  .entry-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .entry-date {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+  .badge.a { background: var(--accent); color: #0a0a0a; }
+  .badge.b { background: var(--sky); color: #0a0a0a; }
+  .entry-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+  .entry-actions {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .action-btn {
+    font-size: 12px;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .action-btn:hover { border-color: rgba(251,191,36,0.4); color: var(--accent); }
+  .action-btn.active-a { border-color: rgba(251,191,36,0.4); color: var(--accent); }
+  .action-btn.to-sky:hover { border-color: rgba(56,189,248,0.4); color: var(--sky); }
+  .delete-btn {
+    background: none; border: none; color: var(--text-ghost);
+    padding: 6px; border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .delete-btn:hover { color: var(--rose); }
+  .coin-tag {
+    font-size: 12px;
+    background: rgba(38,38,38,0.6);
+    color: #e5e5e5;
+    border: 1px solid rgba(64,64,64,0.5);
+    padding: 4px 10px;
+    border-radius: 4px;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .coin-tag:hover { border-color: rgba(251,191,36,0.4); color: #fcd34d; }
+  
+  /* 시세 표시 */
+  .coin-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .coin-price.up {
+    color: #f87171;
+    background: rgba(239,68,68,0.12);
+  }
+  .coin-price.down {
+    color: #60a5fa;
+    background: rgba(59,130,246,0.12);
+  }
+  .coin-price.flat {
+    color: var(--text-faint);
+    background: rgba(64,64,64,0.3);
+  }
+  .coin-price.loading {
+    color: var(--text-ghost);
+    background: transparent;
+    font-style: italic;
+  }
+  .coin-price.unmatched {
+    color: var(--text-ghost);
+    background: transparent;
+    font-size: 9px;
+    opacity: 0.6;
+  }
+  .coin-tag.unmatched {
+    opacity: 0.5;
+  }
+
+  /* 시세 컨트롤 */
+  .price-toggle {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 10px;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .price-toggle:hover { border-color: rgba(251,191,36,0.4); color: var(--text); }
+  .price-toggle.active {
+    background: var(--accent);
+    color: #0a0a0a;
+    font-weight: 600;
+    border-color: var(--accent);
+  }
+  .price-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .price-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--text-ghost);
+  }
+  .price-dot.live {
+    background: #34d399;
+    box-shadow: 0 0 6px rgba(52,211,153,0.6);
+    animation: pulse 2s infinite;
+  }
+  .price-dot.error { background: #ef4444; }
+
+  /* 수동 매칭 모달 */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    animation: fadeIn 0.15s ease-out;
+  }
+  .modal-backdrop.show { display: flex; }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .modal-title .target {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+  .modal-close {
+    background: none; border: none; color: var(--text-faint);
+    cursor: pointer; padding: 4px;
+    transition: color 0.15s;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-search {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-search input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 13px;
+    transition: border-color 0.15s;
+  }
+  .modal-search input:focus {
+    outline: none;
+    border-color: rgba(251,191,36,0.5);
+  }
+  .modal-search input::placeholder { color: var(--text-ghost); }
+  .modal-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px 0;
+  }
+  .modal-list::-webkit-scrollbar { width: 6px; }
+  .modal-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .market-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.1s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .market-item:hover { background: rgba(251,191,36,0.06); }
+  .market-name {
+    font-size: 13px;
+    color: var(--text);
+  }
+  .market-name .eng {
+    color: var(--text-faint);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-left: 6px;
+  }
+  .market-ticker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    background: rgba(38,38,38,0.6);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+  .market-empty {
+    padding: 30px 20px;
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 13px;
+  }
+  .modal-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .modal-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .modal-btn:hover { color: var(--text); border-color: #444; }
+  .modal-btn.danger:hover { color: var(--rose); border-color: rgba(251,113,133,0.4); }
+  .modal-btn.success {
+    color: var(--emerald);
+    border-color: rgba(52,211,153,0.3);
+  }
+  .modal-btn.success:hover {
+    background: rgba(52,211,153,0.1);
+    border-color: rgba(52,211,153,0.5);
+  }
+  
+  /* 클릭 가능한 unmatched 태그 */
+  .coin-tag.unmatched { cursor: pointer; }
+  .coin-tag.unmatched:hover {
+    border-color: rgba(251,191,36,0.4);
+    opacity: 1;
+  }
+  .coin-tag.manual {
+    border-color: rgba(52,211,153,0.3);
+  }
+
+  /* Streak section */
+  .streak-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .streak-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .window-selector {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px;
+  }
+  .window-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .window-btn:hover { color: var(--text); }
+  .window-btn.active {
+    background: var(--accent);
+    color: #0a0a0a;
+    font-weight: 600;
+  }
+  .streak-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .streak-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+    letter-spacing: 0.1em;
+  }
+  .streak-group {
+    margin-bottom: 18px;
+  }
+  .streak-group:last-child { margin-bottom: 0; }
+  .streak-group-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .streak-group-label .count-badge {
+    background: rgba(38,38,38,0.6);
+    color: var(--text-dim);
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+  .streak-label-hot { color: #f97316; }
+  .streak-label-warm { color: var(--accent); }
+  .streak-label-mild { color: var(--sky); }
+  .streak-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .streak-tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .streak-tag.hot {
+    background: rgba(249,115,22,0.08);
+    color: #fdba74;
+    border-color: rgba(249,115,22,0.25);
+  }
+  .streak-tag.warm {
+    background: rgba(251,191,36,0.08);
+    color: #fcd34d;
+    border-color: rgba(251,191,36,0.25);
+  }
+  .streak-tag.mild {
+    background: rgba(56,189,248,0.08);
+    color: #7dd3fc;
+    border-color: rgba(56,189,248,0.25);
+  }
+  .streak-tag .freq {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    opacity: 0.7;
+  }
+  .streak-empty {
+    font-size: 12px;
+    color: var(--text-ghost);
+    text-align: center;
+    padding: 16px 0;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  footer p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--text-ghost);
+  }
+
+  /* Utility */
+  .hidden { display: none !important; }
+  .section { margin-bottom: 40px; }
+
+  /* Icon */
+  .icon {
+    width: 18px; height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon-sm { width: 14px; height: 14px; }
+  .icon-xs { width: 12px; height: 12px; }
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<div class="container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-tag">
+      <div class="pulse-dot"></div>
+      <span>CRYPTO · DAILY · LEDGER</span>
+    </div>
+    <h1>추천 코인 <em>메모장</em></h1>
+    <p>텍스트를 붙여넣으면 날짜를 자동 인식하고 · 가나다순 정렬 · 날짜별 비교</p>
+  </header>
+
+  <!-- Input -->
+  <section class="section">
+    <div class="input-wrap">
+      <div class="input-glow"></div>
+      <div class="input-card">
+        <div class="input-header">
+          <div class="traffic-lights">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+            <span class="filename">paste.clipboard</span>
+          </div>
+          <span class="char-count" id="charCount">0 chars</span>
+        </div>
+        <textarea id="inputArea" placeholder="예시:&#10;4월 21일&#10;비트코인, 이더리움 리플&#10;솔라나 에이다&#10;&#10;4월 20일&#10;도지, 체인링크&#10;&#10;여러 날짜 한번에 붙여넣어도 OK"></textarea>
+        <div class="input-footer">
+          <div class="detected" id="detectedInfo"></div>
+          <button id="saveBtn" class="btn" disabled>
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            저장
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="previewArea"></div>
+  </section>
+
+  <!-- Compare -->
+  <section id="compareSection" class="section hidden">
+    <div class="compare-banner">
+      <div class="compare-header">
+        <div class="compare-title">
+          <svg class="icon" viewBox="0 0 24 24" style="color: var(--accent);"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          <span>날짜별 비교</span>
+        </div>
+        <button id="closeCompare" class="close-btn">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="compare-dates">
+        <span id="compareDateA"></span>
+        <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--text-faint);"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <span id="compareDateB"></span>
+      </div>
+      <div class="compare-grid">
+        <div class="compare-card">
+          <div class="compare-card-label emerald" id="commonLabel">공통 · 0</div>
+          <div class="tags" id="commonTags"></div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-card-label sky" id="onlyALabel">A만 · 0</div>
+          <div class="tags" id="onlyATags"></div>
+        </div>
+        <div class="compare-card">
+          <div class="compare-card-label rose" id="onlyBLabel">B만 · 0</div>
+          <div class="tags" id="onlyBTags"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Streak (연속 추천) -->
+  <section id="streakSection" class="section hidden">
+    <div class="streak-header">
+      <div class="streak-title">
+        <svg class="icon" viewBox="0 0 24 24" style="color: var(--accent);"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span>연속 추천 코인</span>
+      </div>
+      <div class="window-selector" id="windowSelector">
+        <button class="window-btn" data-window="3">최근 3일</button>
+        <button class="window-btn active" data-window="4">최근 4일</button>
+        <button class="window-btn" data-window="7">최근 7일</button>
+        <button class="window-btn" data-window="0">전체</button>
+      </div>
+    </div>
+    <div class="streak-card">
+      <div class="streak-meta" id="streakMeta"></div>
+      <div id="streakContent"></div>
+    </div>
+  </section>
+
+  <!-- Entries -->
+  <section>
+    <div class="entries-header">
+      <div class="entries-title">
+        <svg class="icon" viewBox="0 0 24 24" style="color: var(--accent);"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>저장된 기록</span>
+        <span class="entries-count" id="entriesCount">(0)</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <div class="price-status" id="priceStatus" style="display: none;">
+          <div class="price-dot" id="priceDot"></div>
+          <span id="priceStatusText">OFF</span>
+        </div>
+        <button class="price-toggle" id="priceToggle" title="업비트 실시간 시세 표시">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          <span>시세 보기</span>
+        </button>
+        <div class="hint" id="compareHint"></div>
+      </div>
+    </div>
+    <div id="entriesList"></div>
+  </section>
+
+  <footer>
+    <p>DATA · PERSISTED · LOCALLY</p>
+  </footer>
+</div>
+
+<!-- 수동 매칭 모달 -->
+<div class="modal-backdrop" id="matchModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        <span>매칭 코인 선택:</span>
+        <span class="target" id="modalTargetCoin"></span>
+      </div>
+      <button class="modal-close" id="modalCloseBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-search">
+      <input type="text" id="modalSearch" placeholder="업비트 코인 이름이나 티커로 검색 (예: 라이브, LPT)" autocomplete="off" />
+    </div>
+    <div class="modal-list" id="modalList"></div>
+    <div class="modal-footer">
+      <button class="modal-btn danger" id="modalUnmatchBtn">시세 표시 안 함</button>
+      <button class="modal-btn" id="modalResetBtn">자동 매칭으로 되돌리기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========= STATE =========
+const STORAGE_KEY = 'crypto_recommendations_v1';
+const WINDOW_KEY = 'crypto_streak_window_v1';
+const PRICE_ENABLED_KEY = 'crypto_price_enabled_v1';
+const MANUAL_MATCH_KEY = 'crypto_manual_match_v1';
+let entries = {};
+let selectedDate = null;
+let compareDate = null;
+let streakWindow = 4;
+
+// 시세 관련
+let priceEnabled = false;
+let upbitMarkets = []; // 업비트 전체 마켓 목록 [{market, korean_name, english_name}]
+let coinMatchMap = {}; // {메모코인이름: 'KRW-XXX' or null}
+let manualMatch = {}; // {메모코인이름: 'KRW-XXX' or 'UNMATCH'} - 수동 매칭/제외
+let priceData = {}; // {'KRW-XXX': {trade_price, change, change_rate}}
+let priceUpdateTimer = null;
+let lastPriceUpdate = null;
+
+// ========= STORAGE =========
+function loadEntries() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) entries = JSON.parse(raw);
+  } catch (e) {
+    console.error('불러오기 실패:', e);
+    entries = {};
+  }
+}
+function saveEntries() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+  } catch (e) {
+    console.error('저장 실패:', e);
+    alert('저장에 실패했습니다. 브라우저 저장 공간을 확인해주세요.');
+  }
+}
+
+// ========= PARSING =========
+function normalizeDate(y, m, d) {
+  return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+}
+
+function findDateMarkers(text) {
+  const markers = [];
+  const currentYear = new Date().getFullYear();
+  const occupied = [];
+
+  const patterns = [
+    { regex: /(\d{4})[-./](\d{1,2})[-./](\d{1,2})/g, extract: (m) => ({ y: m[1], mo: m[2], d: m[3] }) },
+    { regex: /(\d{1,2})\s*월\s*(\d{1,2})\s*일/g, extract: (m) => ({ y: currentYear, mo: m[1], d: m[2] }) },
+    { regex: /(?:^|\n|\s)(\d{1,2})[-./](\d{1,2})(?=\s|$|\n)/g, extract: (m) => ({ y: currentYear, mo: m[1], d: m[2] }) },
+  ];
+
+  for (const { regex, extract } of patterns) {
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
+      let overlap = false;
+      for (const [s, e] of occupied) {
+        if (!(end <= s || start >= e)) { overlap = true; break; }
+      }
+      if (overlap) continue;
+
+      const { y, mo, d } = extract(match);
+      const monthNum = parseInt(mo, 10);
+      const dayNum = parseInt(d, 10);
+      if (monthNum < 1 || monthNum > 12 || dayNum < 1 || dayNum > 31) continue;
+
+      occupied.push([start, end]);
+      markers.push({ start, end, date: normalizeDate(y, mo, d) });
+    }
+  }
+  return markers.sort((a, b) => a.start - b.start);
+}
+
+function tokenizeCoins(text) {
+  const cleaned = text.replace(/\([^)]*\)/g, '').replace(/\[[^\]]*\]/g, '');
+  const tokens = cleaned
+    .split(/[\n,\s/\t;·•・|.]+/)
+    .map((t) => t.trim())
+    .filter((t) => t.length > 0)
+    .filter((t) => !/^\d+$/.test(t))
+    .filter((t) => /[가-힣a-zA-Z]/.test(t))
+    .filter((t) => !['추천', '종목', '코인', '오늘', '내일', '어제', '원'].includes(t));
+  return [...new Set(tokens)].sort((a, b) => a.localeCompare(b, 'ko'));
+}
+
+function parseBlocks(text) {
+  if (!text.trim()) return [];
+  const markers = findDateMarkers(text);
+
+  if (markers.length === 0) {
+    const coins = tokenizeCoins(text);
+    if (coins.length === 0) return [];
+    const today = new Date();
+    return [{ date: normalizeDate(today.getFullYear(), today.getMonth() + 1, today.getDate()), coins }];
+  }
+
+  const blocks = [];
+  if (markers[0].start > 0) {
+    const prefix = text.slice(0, markers[0].start);
+    const prefixCoins = tokenizeCoins(prefix);
+    if (prefixCoins.length > 0) {
+      const today = new Date();
+      blocks.push({ date: normalizeDate(today.getFullYear(), today.getMonth() + 1, today.getDate()), coins: prefixCoins });
+    }
+  }
+
+  for (let i = 0; i < markers.length; i++) {
+    const m = markers[i];
+    const next = markers[i + 1];
+    const segment = text.slice(m.end, next ? next.start : text.length);
+    const coins = tokenizeCoins(segment);
+    if (coins.length > 0) blocks.push({ date: m.date, coins });
+  }
+
+  const merged = {};
+  for (const b of blocks) {
+    if (!merged[b.date]) merged[b.date] = new Set(b.coins);
+    else b.coins.forEach((c) => merged[b.date].add(c));
+  }
+  return Object.entries(merged).map(([date, set]) => ({
+    date,
+    coins: [...set].sort((a, b) => a.localeCompare(b, 'ko')),
+  }));
+}
+
+// ========= RENDER =========
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+function renderPreview() {
+  const text = document.getElementById('inputArea').value;
+  const blocks = parseBlocks(text);
+  const previewEl = document.getElementById('previewArea');
+  const btn = document.getElementById('saveBtn');
+  const detected = document.getElementById('detectedInfo');
+  const charCount = document.getElementById('charCount');
+
+  charCount.textContent = `${text.length} chars`;
+
+  if (blocks.length === 0) {
+    previewEl.innerHTML = '';
+    btn.disabled = true;
+    detected.innerHTML = '';
+    return;
+  }
+
+  btn.disabled = false;
+  const totalCoins = blocks.reduce((s, b) => s + b.coins.length, 0);
+  detected.innerHTML = `감지 <span class="mono">${blocks.length}</span>일 · 총 <span class="mono">${totalCoins}</span>개 종목`;
+
+  const rows = blocks.map((b) => `
+    <div class="preview-row">
+      <span class="preview-date">${b.date}</span>
+      <span class="preview-sep">·</span>
+      <span class="preview-count">${b.coins.length}개</span>
+      <span class="preview-coins">${escapeHtml(b.coins.join(', '))}</span>
+    </div>
+  `).join('');
+
+  previewEl.innerHTML = `
+    <div class="preview">
+      <div class="preview-label">PREVIEW · 저장 전 미리보기</div>
+      <div>${rows}</div>
+    </div>
+  `;
+}
+
+function renderCompare() {
+  const section = document.getElementById('compareSection');
+  if (!selectedDate || !compareDate) {
+    section.classList.add('hidden');
+    return;
+  }
+  section.classList.remove('hidden');
+  const a = new Set(entries[selectedDate].coins);
+  const b = new Set(entries[compareDate].coins);
+  const common = [...a].filter(x => b.has(x)).sort((a,b)=>a.localeCompare(b,'ko'));
+  const onlyA = [...a].filter(x => !b.has(x)).sort((a,b)=>a.localeCompare(b,'ko'));
+  const onlyB = [...b].filter(x => !a.has(x)).sort((a,b)=>a.localeCompare(b,'ko'));
+
+  document.getElementById('compareDateA').textContent = selectedDate;
+  document.getElementById('compareDateB').textContent = compareDate;
+  document.getElementById('commonLabel').textContent = `공통 · ${common.length}`;
+  document.getElementById('onlyALabel').textContent = `${selectedDate}만 · ${onlyA.length}`;
+  document.getElementById('onlyBLabel').textContent = `${compareDate}만 · ${onlyB.length}`;
+
+  const render = (arr, cls) => arr.length > 0
+    ? arr.map(c => `<span class="tag ${cls}">${escapeHtml(c)}</span>`).join('')
+    : '<span class="empty">없음</span>';
+
+  document.getElementById('commonTags').innerHTML = render(common, 'emerald');
+  document.getElementById('onlyATags').innerHTML = render(onlyA, 'sky');
+  document.getElementById('onlyBTags').innerHTML = render(onlyB, 'rose');
+}
+
+function renderEntries() {
+  const list = document.getElementById('entriesList');
+  const countEl = document.getElementById('entriesCount');
+  const hintEl = document.getElementById('compareHint');
+  const dates = Object.keys(entries).sort((a, b) => b.localeCompare(a));
+
+  countEl.textContent = `(${dates.length})`;
+
+  if (dates.length >= 2 && !compareDate) {
+    hintEl.textContent = selectedDate ? '비교할 다른 날짜 선택 →' : '카드 선택 → 비교할 다른 날짜 선택';
+  } else {
+    hintEl.textContent = '';
+  }
+
+  if (dates.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <p>아직 기록이 없어요</p>
+        <p class="sub">위에 붙여넣고 저장 버튼을 눌러보세요</p>
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = dates.map((date) => {
+    const entry = entries[date];
+    const isA = selectedDate === date;
+    const isB = compareDate === date;
+    const activeClass = (isA || isB) ? ' active' : '';
+
+    let actionBtn = '';
+    if (!selectedDate) {
+      actionBtn = `<button class="action-btn" onclick="startCompare('${date}')">비교 시작</button>`;
+    } else if (selectedDate === date) {
+      actionBtn = `<button class="action-btn active-a" onclick="cancelCompare()">취소</button>`;
+    } else if (!compareDate) {
+      actionBtn = `<button class="action-btn to-sky" onclick="setCompareB('${date}')">여기와 비교</button>`;
+    }
+
+    const coinsHtml = entry.coins.map(c => {
+      let priceHtml = '';
+      let extraClass = '';
+      let clickable = '';
+      if (priceEnabled) {
+        const market = coinMatchMap[c];
+        const isManual = manualMatch[c] && manualMatch[c] !== 'UNMATCH';
+        if (market === undefined) {
+          priceHtml = '<span class="coin-price loading">...</span>';
+        } else if (market === null) {
+          // 매칭 실패 또는 수동 제외
+          const label = manualMatch[c] === 'UNMATCH' ? '제외됨' : '미상장';
+          priceHtml = `<span class="coin-price unmatched">${label}</span>`;
+          extraClass = ' unmatched';
+          clickable = ` onclick="openMatchModal('${c.replace(/'/g, "\\'")}')" title="클릭하여 수동 매칭"`;
+        } else {
+          const data = priceData[market];
+          if (data) {
+            const rate = data.change_rate * 100;
+            const sign = rate > 0 ? '+' : '';
+            const cls = data.change === 'RISE' ? 'up' : data.change === 'FALL' ? 'down' : 'flat';
+            const arrow = data.change === 'RISE' ? '▲' : data.change === 'FALL' ? '▼' : '·';
+            priceHtml = `<span class="coin-price ${cls}">${arrow}${sign}${rate.toFixed(2)}%</span>`;
+          } else {
+            priceHtml = '<span class="coin-price loading">...</span>';
+          }
+          if (isManual) extraClass += ' manual';
+          clickable = ` onclick="openMatchModal('${c.replace(/'/g, "\\'")}')" title="클릭하여 매칭 변경"`;
+        }
+      }
+      return `<span class="coin-tag${extraClass}"${clickable}>${escapeHtml(c)}${priceHtml}</span>`;
+    }).join('');
+    const badges = (isA ? '<span class="badge a">A</span>' : '') + (isB ? '<span class="badge b">B</span>' : '');
+
+    return `
+      <div class="entry${activeClass}">
+        <div class="entry-content">
+          <div class="entry-header">
+            <div>
+              <div class="entry-date">
+                <span>${date}</span>
+                ${badges}
+              </div>
+              <div class="entry-count">${entry.coins.length}개 종목</div>
+            </div>
+            <div class="entry-actions">
+              ${actionBtn}
+              <button class="delete-btn" onclick="deleteEntry('${date}')" title="삭제">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 01-2 2H9a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="tags">${coinsHtml}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function computeStreaks() {
+  // 날짜 최신순 정렬
+  const allDates = Object.keys(entries).sort((a, b) => b.localeCompare(a));
+  if (allDates.length === 0) return null;
+
+  // 윈도우 적용 (0이면 전체)
+  const windowDates = streakWindow > 0 ? allDates.slice(0, streakWindow) : allDates;
+  const totalDays = windowDates.length;
+
+  // 각 코인이 몇 번 등장했는지 집계
+  const coinCount = {};
+  for (const date of windowDates) {
+    for (const coin of entries[date].coins) {
+      if (!coinCount[coin]) coinCount[coin] = { count: 0, dates: [] };
+      coinCount[coin].count++;
+      coinCount[coin].dates.push(date);
+    }
+  }
+
+  // 2번 이상 등장한 것만 필터링
+  const repeated = Object.entries(coinCount)
+    .filter(([_, info]) => info.count >= 2)
+    .map(([coin, info]) => ({ coin, count: info.count, dates: info.dates }));
+
+  // 등장 횟수별로 그룹화 (높은 순)
+  const groups = {};
+  for (const item of repeated) {
+    if (!groups[item.count]) groups[item.count] = [];
+    groups[item.count].push(item);
+  }
+
+  // 각 그룹 내에서 가나다순 정렬
+  Object.values(groups).forEach(arr => {
+    arr.sort((a, b) => a.coin.localeCompare(b.coin, 'ko'));
+  });
+
+  return { groups, totalDays, windowDates };
+}
+
+function renderStreak() {
+  const section = document.getElementById('streakSection');
+  const totalEntries = Object.keys(entries).length;
+
+  // 기록이 2개 미만이면 숨김
+  if (totalEntries < 2) {
+    section.classList.add('hidden');
+    return;
+  }
+  section.classList.remove('hidden');
+
+  const result = computeStreaks();
+  if (!result) return;
+
+  const { groups, totalDays, windowDates } = result;
+  const metaEl = document.getElementById('streakMeta');
+  const contentEl = document.getElementById('streakContent');
+
+  // 메타 정보
+  const fromDate = windowDates[windowDates.length - 1];
+  const toDate = windowDates[0];
+  metaEl.textContent = `WINDOW: ${fromDate} → ${toDate} · ${totalDays}일 분석`;
+
+  // 등장 횟수 내림차순
+  const countLevels = Object.keys(groups).map(Number).sort((a, b) => b - a);
+
+  if (countLevels.length === 0) {
+    contentEl.innerHTML = '<div class="streak-empty">2회 이상 연속 추천된 코인이 없어요</div>';
+    return;
+  }
+
+  // 색상 결정: 최고 레벨은 hot, 그 다음은 warm, 나머지는 mild
+  const html = countLevels.map((count, idx) => {
+    let cls, labelCls;
+    if (idx === 0) { cls = 'hot'; labelCls = 'streak-label-hot'; }
+    else if (idx === 1) { cls = 'warm'; labelCls = 'streak-label-warm'; }
+    else { cls = 'mild'; labelCls = 'streak-label-mild'; }
+
+    const items = groups[count];
+    const tags = items.map(item => {
+      let priceHtml = '';
+      if (priceEnabled) {
+        const market = coinMatchMap[item.coin];
+        if (market && priceData[market]) {
+          const data = priceData[market];
+          const rate = data.change_rate * 100;
+          const sign = rate > 0 ? '+' : '';
+          const pcls = data.change === 'RISE' ? 'up' : data.change === 'FALL' ? 'down' : 'flat';
+          const arrow = data.change === 'RISE' ? '▲' : data.change === 'FALL' ? '▼' : '·';
+          priceHtml = `<span class="coin-price ${pcls}" style="margin-left:4px">${arrow}${sign}${rate.toFixed(2)}%</span>`;
+        }
+      }
+      return `<span class="streak-tag ${cls}">${escapeHtml(item.coin)}<span class="freq">${item.count}회</span>${priceHtml}</span>`;
+    }).join('');
+
+    return `
+      <div class="streak-group">
+        <div class="streak-group-label ${labelCls}">
+          <span>${count}일 / ${totalDays}일 등장</span>
+          <span class="count-badge">${items.length}종목</span>
+        </div>
+        <div class="streak-tags">${tags}</div>
+      </div>
+    `;
+  }).join('');
+
+  contentEl.innerHTML = html;
+}
+
+function renderAll() {
+  renderEntries();
+  renderCompare();
+  renderStreak();
+}
+
+// ========= 업비트 시세 =========
+
+// 한글 정규화 (공백, 특수문자 제거 + 소문자)
+function normalizeKoreanName(s) {
+  return String(s || '').replace(/[\s\-_·.]/g, '').toLowerCase();
+}
+
+// 메모 이름 → 업비트 마켓 매칭
+function matchCoinToMarket(memoName) {
+  if (!upbitMarkets.length) return null;
+  
+  const normMemo = normalizeKoreanName(memoName);
+  const normMemoNoAi = normMemo.replace(/(에이아이|ai)$/i, ''); // "홀로월드에이아이" → "홀로월드"
+  
+  // 1. 완전 일치 (한글명)
+  for (const m of upbitMarkets) {
+    if (normalizeKoreanName(m.korean_name) === normMemo) return m.market;
+  }
+  
+  // 2. 영문명 일치
+  for (const m of upbitMarkets) {
+    if (normalizeKoreanName(m.english_name) === normMemo) return m.market;
+  }
+  
+  // 3. AI 접미사 무시 매칭
+  if (normMemoNoAi !== normMemo) {
+    for (const m of upbitMarkets) {
+      const k = normalizeKoreanName(m.korean_name).replace(/(에이아이|ai)$/i, '');
+      if (k === normMemoNoAi) return m.market;
+    }
+  }
+  
+  // 4. 부분 매칭 (메모이름이 업비트명에 포함)
+  for (const m of upbitMarkets) {
+    const normK = normalizeKoreanName(m.korean_name);
+    if (normMemo.length >= 2 && (normK === normMemo || normK.startsWith(normMemo) || normMemo.startsWith(normK))) {
+      // 너무 짧은 매칭은 제외 (예: "비" → "비트코인"은 위험)
+      if (Math.abs(normK.length - normMemo.length) <= 4) {
+        return m.market;
+      }
+    }
+  }
+  
+  return null;
+}
+
+// 모든 메모 코인에 대해 매칭 수행
+function buildCoinMatchMap() {
+  const allCoins = new Set();
+  for (const date of Object.keys(entries)) {
+    for (const coin of entries[date].coins) allCoins.add(coin);
+  }
+  coinMatchMap = {};
+  for (const coin of allCoins) {
+    // 1) 수동 매칭이 있으면 우선
+    if (manualMatch[coin]) {
+      if (manualMatch[coin] === 'UNMATCH') {
+        coinMatchMap[coin] = null;
+      } else {
+        coinMatchMap[coin] = manualMatch[coin];
+      }
+    } else {
+      // 2) 자동 매칭 시도
+      coinMatchMap[coin] = matchCoinToMarket(coin);
+    }
+  }
+}
+
+// 수동 매칭 저장
+function saveManualMatch() {
+  try {
+    localStorage.setItem(MANUAL_MATCH_KEY, JSON.stringify(manualMatch));
+  } catch (e) { console.error('수동 매칭 저장 실패:', e); }
+}
+
+// 수동 매칭 불러오기
+function loadManualMatch() {
+  try {
+    const raw = localStorage.getItem(MANUAL_MATCH_KEY);
+    if (raw) manualMatch = JSON.parse(raw);
+  } catch (e) { manualMatch = {}; }
+}
+
+// 업비트 API fetch (CORS 우회)
+// 1) 직접 호출 시도 → 2) 실패하면 프록시 사용
+let useProxy = false;
+const CORS_PROXIES = [
+  (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+];
+
+async function fetchUpbit(apiUrl) {
+  // 이미 프록시 사용 중이면 바로 프록시로
+  if (useProxy) {
+    for (const proxyFn of CORS_PROXIES) {
+      try {
+        const res = await fetch(proxyFn(apiUrl));
+        if (res.ok) return await res.json();
+      } catch (e) { /* 다음 프록시 시도 */ }
+    }
+    throw new Error('모든 프록시 실패');
+  }
+  
+  // 1) 직접 호출 시도
+  try {
+    const res = await fetch(apiUrl);
+    if (res.ok) return await res.json();
+    throw new Error('Direct fetch failed');
+  } catch (err) {
+    // 2) 실패하면 프록시로 전환
+    console.log('직접 호출 실패, 프록시로 전환합니다');
+    useProxy = true;
+    for (const proxyFn of CORS_PROXIES) {
+      try {
+        const res = await fetch(proxyFn(apiUrl));
+        if (res.ok) return await res.json();
+      } catch (e) { /* 다음 프록시 시도 */ }
+    }
+    throw new Error('모든 프록시 실패');
+  }
+}
+
+// 업비트 마켓 목록 가져오기 (최초 1회)
+async function loadUpbitMarkets() {
+  if (upbitMarkets.length > 0) return true;
+  try {
+    const data = await fetchUpbit('https://api.upbit.com/v1/market/all?is_details=false');
+    upbitMarkets = data.filter(m => m.market.startsWith('KRW-'));
+    return true;
+  } catch (err) {
+    console.error('업비트 마켓 로드 실패:', err);
+    return false;
+  }
+}
+
+// 시세 정보 가져오기
+async function fetchPrices() {
+  // 매칭된 마켓들만 모음
+  const markets = [...new Set(Object.values(coinMatchMap).filter(Boolean))];
+  if (markets.length === 0) return;
+  
+  try {
+    // 업비트는 한 번에 100개까지 가능, 청크로 분할
+    const chunks = [];
+    for (let i = 0; i < markets.length; i += 100) {
+      chunks.push(markets.slice(i, i + 100));
+    }
+    
+    for (const chunk of chunks) {
+      const url = `https://api.upbit.com/v1/ticker?markets=${chunk.join(',')}`;
+      const data = await fetchUpbit(url);
+      for (const item of data) {
+        priceData[item.market] = {
+          trade_price: item.trade_price,
+          change: item.change, // 'RISE', 'FALL', 'EVEN'
+          change_rate: item.signed_change_rate, // 변동률 (소수)
+        };
+      }
+    }
+    lastPriceUpdate = new Date();
+    updatePriceStatus('live', '');
+    renderEntries();
+    if (typeof renderStreak === 'function') renderStreak();
+  } catch (err) {
+    console.error('시세 조회 실패:', err);
+    updatePriceStatus('error', 'ERROR');
+  }
+}
+
+// 가격 상태 표시 업데이트
+function updatePriceStatus(state, text) {
+  const statusEl = document.getElementById('priceStatus');
+  const dotEl = document.getElementById('priceDot');
+  const textEl = document.getElementById('priceStatusText');
+  if (!statusEl || !dotEl || !textEl) return;
+  
+  if (!priceEnabled) {
+    statusEl.style.display = 'none';
+    return;
+  }
+  statusEl.style.display = 'flex';
+  
+  dotEl.className = 'price-dot ' + (state === 'live' ? 'live' : state === 'error' ? 'error' : '');
+  
+  if (text) {
+    textEl.textContent = text;
+  } else if (lastPriceUpdate) {
+    const t = lastPriceUpdate;
+    const hh = String(t.getHours()).padStart(2, '0');
+    const mm = String(t.getMinutes()).padStart(2, '0');
+    const ss = String(t.getSeconds()).padStart(2, '0');
+    textEl.textContent = `LIVE · ${hh}:${mm}:${ss}`;
+  } else {
+    textEl.textContent = state === 'loading' ? 'LOADING...' : 'OFF';
+  }
+}
+
+// 가격 포맷팅
+function formatPrice(price) {
+  if (price >= 1000000) return Math.round(price).toLocaleString('ko-KR');
+  if (price >= 1000) return Math.round(price).toLocaleString('ko-KR');
+  if (price >= 100) return price.toFixed(1);
+  if (price >= 1) return price.toFixed(2);
+  return price.toFixed(4);
+}
+
+// ========= 수동 매칭 모달 =========
+let modalCurrentCoin = null;
+
+window.openMatchModal = async function(coinName) {
+  // 마켓 로드 안 되어 있으면 로드
+  if (upbitMarkets.length === 0) {
+    const ok = await loadUpbitMarkets();
+    if (!ok) {
+      alert('업비트 마켓 정보를 불러올 수 없습니다. 인터넷 연결을 확인해주세요.');
+      return;
+    }
+  }
+  
+  modalCurrentCoin = coinName;
+  document.getElementById('modalTargetCoin').textContent = coinName;
+  document.getElementById('modalSearch').value = '';
+  document.getElementById('matchModal').classList.add('show');
+  
+  renderMarketList('');
+  
+  // 검색창에 자동 포커스
+  setTimeout(() => document.getElementById('modalSearch').focus(), 100);
+};
+
+function closeMatchModal() {
+  document.getElementById('matchModal').classList.remove('show');
+  modalCurrentCoin = null;
+}
+
+function renderMarketList(keyword) {
+  const list = document.getElementById('modalList');
+  const norm = keyword.trim().toLowerCase();
+  
+  let filtered;
+  if (!norm) {
+    // 검색어 없으면 메모코인이름과 비슷한 것들 자동 추천
+    const memoNorm = normalizeKoreanName(modalCurrentCoin);
+    filtered = upbitMarkets
+      .map(m => {
+        const k = normalizeKoreanName(m.korean_name);
+        const e = (m.english_name || '').toLowerCase();
+        let score = 0;
+        // 완전 일치 우선
+        if (k === memoNorm) score = 100;
+        else if (k.includes(memoNorm) || memoNorm.includes(k)) score = 80;
+        else if (k.startsWith(memoNorm.slice(0, 2))) score = 50;
+        return { ...m, score };
+      })
+      .filter(m => m.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 30);
+    
+    // 비슷한 게 없으면 그냥 처음 30개
+    if (filtered.length === 0) {
+      filtered = upbitMarkets.slice(0, 30);
+    }
+  } else {
+    filtered = upbitMarkets.filter(m => {
+      const k = m.korean_name.toLowerCase();
+      const e = (m.english_name || '').toLowerCase();
+      const t = m.market.toLowerCase();
+      return k.includes(norm) || e.includes(norm) || t.includes(norm);
+    }).slice(0, 50);
+  }
+  
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="market-empty">검색 결과가 없어요</div>';
+    return;
+  }
+  
+  list.innerHTML = filtered.map(m => `
+    <div class="market-item" onclick="selectMatch('${m.market}')">
+      <div class="market-name">
+        ${escapeHtml(m.korean_name)}
+        ${m.english_name ? `<span class="eng">${escapeHtml(m.english_name)}</span>` : ''}
+      </div>
+      <span class="market-ticker">${m.market}</span>
+    </div>
+  `).join('');
+}
+
+window.selectMatch = function(market) {
+  if (!modalCurrentCoin) return;
+  manualMatch[modalCurrentCoin] = market;
+  saveManualMatch();
+  buildCoinMatchMap();
+  closeMatchModal();
+  // 새로 매칭한 코인 시세 즉시 가져오기
+  fetchPrices();
+};
+
+function unmatchCurrent() {
+  if (!modalCurrentCoin) return;
+  manualMatch[modalCurrentCoin] = 'UNMATCH';
+  saveManualMatch();
+  buildCoinMatchMap();
+  closeMatchModal();
+  renderEntries();
+  if (typeof renderStreak === 'function') renderStreak();
+}
+
+function resetMatch() {
+  if (!modalCurrentCoin) return;
+  delete manualMatch[modalCurrentCoin];
+  saveManualMatch();
+  buildCoinMatchMap();
+  closeMatchModal();
+  fetchPrices();
+}
+
+async function togglePrice() {
+  priceEnabled = !priceEnabled;
+  try { localStorage.setItem(PRICE_ENABLED_KEY, priceEnabled ? '1' : '0'); } catch(e) {}
+  
+  const btn = document.getElementById('priceToggle');
+  if (priceEnabled) {
+    btn.classList.add('active');
+    updatePriceStatus('loading', 'LOADING...');
+    
+    // 마켓 정보 로드
+    const ok = await loadUpbitMarkets();
+    if (!ok) {
+      updatePriceStatus('error', 'API 접속 실패');
+      return;
+    }
+    
+    // 매칭 수행
+    buildCoinMatchMap();
+    
+    // 시세 가져오기
+    await fetchPrices();
+    
+    // 30초마다 자동 갱신
+    if (priceUpdateTimer) clearInterval(priceUpdateTimer);
+    priceUpdateTimer = setInterval(fetchPrices, 30000);
+  } else {
+    btn.classList.remove('active');
+    if (priceUpdateTimer) {
+      clearInterval(priceUpdateTimer);
+      priceUpdateTimer = null;
+    }
+    updatePriceStatus('off');
+    renderEntries();
+    if (typeof renderStreak === 'function') renderStreak();
+  }
+}
+
+// ========= ACTIONS =========
+window.startCompare = (date) => { selectedDate = date; renderAll(); };
+window.cancelCompare = () => { selectedDate = null; compareDate = null; renderAll(); };
+window.setCompareB = (date) => { compareDate = date; renderAll(); };
+window.deleteEntry = (date) => {
+  if (!confirm(`${date} 기록을 삭제할까요?`)) return;
+  delete entries[date];
+  if (selectedDate === date) selectedDate = null;
+  if (compareDate === date) compareDate = null;
+  saveEntries();
+  renderAll();
+};
+
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const text = document.getElementById('inputArea').value;
+  const blocks = parseBlocks(text);
+  if (blocks.length === 0) return;
+
+  for (const block of blocks) {
+    if (entries[block.date]) {
+      const existing = new Set(entries[block.date].coins);
+      block.coins.forEach(c => existing.add(c));
+      entries[block.date] = {
+        coins: [...existing].sort((a, b) => a.localeCompare(b, 'ko')),
+        savedAt: new Date().toISOString(),
+      };
+    } else {
+      entries[block.date] = { coins: block.coins, savedAt: new Date().toISOString() };
+    }
+  }
+  saveEntries();
+  document.getElementById('inputArea').value = '';
+  renderPreview();
+  
+  // 시세가 켜져있으면 새 코인 매칭 + 시세 가져오기
+  if (priceEnabled && upbitMarkets.length > 0) {
+    buildCoinMatchMap();
+    fetchPrices();
+  }
+  
+  renderAll();
+});
+
+document.getElementById('inputArea').addEventListener('input', renderPreview);
+document.getElementById('closeCompare').addEventListener('click', () => {
+  selectedDate = null;
+  compareDate = null;
+  renderAll();
+});
+
+// 윈도우 선택 버튼
+document.querySelectorAll('.window-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const newWindow = parseInt(btn.dataset.window, 10);
+    streakWindow = newWindow;
+    try { localStorage.setItem(WINDOW_KEY, String(newWindow)); } catch(e) {}
+    document.querySelectorAll('.window-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderStreak();
+  });
+});
+
+// 저장된 윈도우 설정 불러오기
+try {
+  const savedWindow = localStorage.getItem(WINDOW_KEY);
+  if (savedWindow !== null) {
+    streakWindow = parseInt(savedWindow, 10);
+    document.querySelectorAll('.window-btn').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.window, 10) === streakWindow);
+    });
+  }
+} catch(e) {}
+
+// 시세 토글 버튼 이벤트
+document.getElementById('priceToggle').addEventListener('click', togglePrice);
+
+// 모달 이벤트 연결
+document.getElementById('modalCloseBtn').addEventListener('click', closeMatchModal);
+document.getElementById('modalUnmatchBtn').addEventListener('click', unmatchCurrent);
+document.getElementById('modalResetBtn').addEventListener('click', resetMatch);
+document.getElementById('matchModal').addEventListener('click', (e) => {
+  if (e.target.id === 'matchModal') closeMatchModal();
+});
+document.getElementById('modalSearch').addEventListener('input', (e) => {
+  renderMarketList(e.target.value);
+});
+// ESC로 모달 닫기
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeMatchModal();
+});
+
+// 저장된 시세 모드 복원 (페이지 새로고침해도 유지)
+try {
+  const savedPriceEnabled = localStorage.getItem(PRICE_ENABLED_KEY);
+  if (savedPriceEnabled === '1') {
+    // 자동으로 켜기 (약간 지연 후)
+    setTimeout(() => {
+      togglePrice();
+    }, 300);
+  }
+} catch(e) {}
+
+// 페이지 떠날 때 타이머 정리
+window.addEventListener('beforeunload', () => {
+  if (priceUpdateTimer) clearInterval(priceUpdateTimer);
+});
+
+// ========= INIT =========
+loadEntries();
+loadManualMatch();
+renderPreview();
+renderAll();
+</script>
+</body>
+</html>
